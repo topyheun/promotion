@@ -1,4 +1,4 @@
-package topy.promotion.modules.promotion;
+package topy.promotion.modules.promotion.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

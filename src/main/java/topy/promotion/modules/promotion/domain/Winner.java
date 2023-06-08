@@ -1,4 +1,4 @@
-package topy.promotion.modules.promotion;
+package topy.promotion.modules.promotion.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -11,14 +11,14 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Participation {
+public class Winner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "participation_date")
-    private LocalDateTime participationDate;
+    @Column(name = "winner_win_date")
+    private LocalDateTime winDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_sq")
@@ -27,4 +27,8 @@ public class Participation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "promotion_sq")
     private Promotion promotion;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reward_sq")
+    private Reward reward;
 }

@@ -5,8 +5,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import topy.promotion.modules.common.BaseEntity;
-import topy.promotion.modules.promotion.Participation;
-import topy.promotion.modules.promotion.Winner;
+import topy.promotion.modules.promotion.domain.Participation;
+import topy.promotion.modules.promotion.domain.Winner;
 
 import java.util.ArrayList;
 import java.util.List;
