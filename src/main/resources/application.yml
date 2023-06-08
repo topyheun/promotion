@@ -33,3 +33,7 @@ spring:
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: ture
+
+server:
+  error:
+    include-stacktrace: never
