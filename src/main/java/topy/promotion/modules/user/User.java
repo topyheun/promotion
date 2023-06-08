@@ -2,6 +2,7 @@ package topy.promotion.modules.user;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import topy.promotion.modules.common.BaseEntity;
@@ -26,9 +27,6 @@ public class User extends BaseEntity {
     @Column(name = "user_password")
     private String password;
 
-    @Column(name = "user_name")
-    private String name;
-
     @Column(name = "user_email", unique = true)
     private String email;
 
@@ -37,4 +35,11 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user")
     private List<Winner> winners = new ArrayList<>();
+
+    @Builder
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 }
