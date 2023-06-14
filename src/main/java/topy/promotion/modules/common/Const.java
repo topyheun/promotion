@@ -14,6 +14,10 @@ public class Const {
     public static final String USER_DTO_WRONG_EMAIL_FORMAT = "올바르지 않은 이메일 양식입니다";
 
     public static final String PROMOTION_USED_PROMOTION = "사용중인 프로모션 입니다";
+    public static final String PROMOTION_NOT_FOUND_PROMOTION = "프로모션을 찾을 수 없습니다.";
 
     public static final String PROMOTION_DTO_NO_VALUES = "프로모션 정보를 작성해주세요";
+
+    public static final String REWARD_DTO_NO_VALUES = "경품 정보를 작성해주세요";
+    public static final String REWARD_DTO_ENTER_NUMBER_GREATER_THAN_ZERO = "0 이상의 경품 수량을 입력해주세요";
 }
