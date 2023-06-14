@@ -5,8 +5,6 @@ public class Const {
     public static final String SUCCESS = "성공";
 
     public static final String USER_USED_ACCOUNT = "사용중인 계정입니다.";
-    public static final String USER_NOT_FOUND_ACCOUNT = "계정을 찾을 수 없습니다.";
-    public static final String USER_INCORRECT_PASSWORD = "비밀번호가 일치하지 않습니다.";
 
     public static final String USER_DTO_NO_USERNAME = "아이디를 입력해주세요";
     public static final String USER_DTO_NO_PASSWORD = "비밀번호를 입력해주세요";

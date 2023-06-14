@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import topy.promotion.modules.user.dto.UserSignInRequest;
-import topy.promotion.modules.user.dto.UserSignInResponse;
 import topy.promotion.modules.user.dto.UserSignUpRequest;
 
 import static topy.promotion.modules.common.Const.SUCCESS;
@@ -22,11 +20,5 @@ public class UserController {
     public ResponseEntity signUp(@RequestBody @Valid UserSignUpRequest userSignUpRequest) {
         userService.createAccount(userSignUpRequest);
         return ResponseEntity.ok(SUCCESS);
-    }
-
-    @PostMapping("/users/sign-in")
-    public ResponseEntity signIn(@RequestBody @Valid UserSignInRequest userSignInRequest) {
-        UserSignInResponse userSignInResponse = userService.signIn(userSignInRequest);
-        return ResponseEntity.ok(userSignInResponse);
     }
 }
