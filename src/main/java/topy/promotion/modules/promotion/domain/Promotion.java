@@ -47,4 +47,12 @@ public class Promotion {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    public void startPromotion() {
+        this.status = PromotionStatus.ON;
+    }
+
+    public void endPromotion() {
+        this.status = PromotionStatus.OFF;
+    }
 }
