@@ -2,6 +2,7 @@ package topy.promotion.modules.promotion.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -39,4 +40,11 @@ public class Promotion {
 
     @OneToMany(mappedBy = "promotion")
     private List<Reward> rewards = new ArrayList<>();
+
+    @Builder
+    public Promotion(String title, LocalDateTime startDate, LocalDateTime endDate) {
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 }

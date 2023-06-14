@@ -12,4 +12,8 @@ public class Const {
     public static final String USER_DTO_WRONG_USERNAME_FORMAT = "올바르지 않은 아이디 양식입니다";
     public static final String USER_DTO_WRONG_PASSWORD_FORMAT = "올바르지 않은 비밀번호 양식입니다";
     public static final String USER_DTO_WRONG_EMAIL_FORMAT = "올바르지 않은 이메일 양식입니다";
+
+    public static final String PROMOTION_USED_PROMOTION = "사용중인 프로모션 입니다";
+
+    public static final String PROMOTION_DTO_NO_VALUES = "프로모션 정보를 작성해주세요";
 }
