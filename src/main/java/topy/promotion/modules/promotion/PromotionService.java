@@ -5,13 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import topy.promotion.modules.promotion.domain.Promotion;
 import topy.promotion.modules.promotion.domain.Reward;
-import topy.promotion.modules.promotion.dto.RegisterPromotionRequest;
-import topy.promotion.modules.promotion.dto.RegisterPromotionResponse;
-import topy.promotion.modules.promotion.dto.RegisterRewardRequest;
-import topy.promotion.modules.promotion.dto.RegisterRewardResponse;
+import topy.promotion.modules.promotion.dto.*;
 
-import static topy.promotion.modules.common.Const.PROMOTION_NOT_FOUND_PROMOTION;
-import static topy.promotion.modules.common.Const.PROMOTION_USED_PROMOTION;
+import java.util.ArrayList;
+import java.util.List;
+
+import static topy.promotion.modules.common.Const.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -37,6 +36,25 @@ public class PromotionService {
         return RegisterPromotionResponse.builder()
                 .title(registerPromotionRequest.getTitle())
                 .build();
+    }
+
+    public List<SearchPromotionResponse> getPromotion() {
+        List<Promotion> promotions = promotionRepository.findAll();
+        if (promotions.isEmpty()) {
+            throw new RuntimeException(PROMOTION_NOTHING_REGISTERED_PROMOTION);
+        }
+        List<SearchPromotionResponse> promotionList = new ArrayList<>();
+
+        for (Promotion promotion : promotions) {
+            SearchPromotionResponse searchPromotionResponse = SearchPromotionResponse.builder()
+                    .title(promotion.getTitle())
+                    .startDate(promotion.getStartDate())
+                    .endDate(promotion.getEndDate())
+                    .status(promotion.getStatus())
+                    .build();
+            promotionList.add(searchPromotionResponse);
+        }
+        return promotionList;
     }
 
     @Transactional

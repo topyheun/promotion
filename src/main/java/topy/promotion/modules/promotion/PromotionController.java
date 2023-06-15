@@ -3,14 +3,10 @@ package topy.promotion.modules.promotion;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import topy.promotion.modules.promotion.dto.RegisterPromotionRequest;
-import topy.promotion.modules.promotion.dto.RegisterPromotionResponse;
-import topy.promotion.modules.promotion.dto.RegisterRewardRequest;
-import topy.promotion.modules.promotion.dto.RegisterRewardResponse;
+import org.springframework.web.bind.annotation.*;
+import topy.promotion.modules.promotion.dto.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +18,12 @@ public class PromotionController {
     public ResponseEntity<RegisterPromotionResponse> registerPromotion(@RequestBody @Valid RegisterPromotionRequest registerPromotionRequest) {
         RegisterPromotionResponse registerPromotionResponse = promotionService.createPromotion(registerPromotionRequest);
         return ResponseEntity.ok().body(registerPromotionResponse);
+    }
+
+    @GetMapping("/promotions")
+    public ResponseEntity<List<SearchPromotionResponse>> searchPromotions() {
+        List<SearchPromotionResponse> searchPromotionResponses = promotionService.getPromotion();
+        return ResponseEntity.ok().body(searchPromotionResponses);
     }
 
     @PostMapping("/promotions/{promotion_title}/rewards")
