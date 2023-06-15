@@ -4,14 +4,12 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import topy.promotion.modules.user.User;
-
-import java.time.LocalDateTime;
+import topy.promotion.modules.common.BaseDateEntity;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Winner {
+public class Winner extends BaseDateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
