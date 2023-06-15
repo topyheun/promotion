@@ -26,10 +26,10 @@ public class PromotionController {
         return ResponseEntity.ok().body(searchPromotionResponses);
     }
 
-    @PostMapping("/promotions/{promotion_title}/rewards")
-    public ResponseEntity<RegisterRewardResponse> registerReward(@PathVariable String promotion_title,
+    @PostMapping("/promotions/{promotionTitle}/rewards")
+    public ResponseEntity<RegisterRewardResponse> registerReward(@PathVariable String promotionTitle,
                                                                  @RequestBody @Valid RegisterRewardRequest registerRewardRequest) {
-        RegisterRewardResponse registerRewardResponse = promotionService.createReward(promotion_title, registerRewardRequest);
+        RegisterRewardResponse registerRewardResponse = promotionService.createReward(promotionTitle, registerRewardRequest);
         return ResponseEntity.ok().body(registerRewardResponse);
     }
 }

@@ -58,8 +58,8 @@ public class PromotionService {
     }
 
     @Transactional
-    public RegisterRewardResponse createReward(String promotion_title, RegisterRewardRequest registerRewardRequest) {
-        Promotion promotion = promotionRepository.findByTitle(promotion_title)
+    public RegisterRewardResponse createReward(String promotionTitle, RegisterRewardRequest registerRewardRequest) {
+        Promotion promotion = promotionRepository.findByTitle(promotionTitle)
                 .orElseThrow(() -> new RuntimeException(PROMOTION_NOT_FOUND_PROMOTION));
 
         Reward reward = Reward.builder()
