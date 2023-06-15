@@ -4,21 +4,19 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import topy.promotion.modules.common.BaseDateEntity;
 import topy.promotion.modules.user.User;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Participation {
+public class Participation extends BaseDateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "participation_date")
-    private LocalDateTime participationDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_sq")
@@ -27,4 +25,8 @@ public class Participation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "promotion_sq")
     private Promotion promotion;
+
+    public boolean isAlreadyParticipateToday() {
+        return getCreatedAt().isEqual(LocalDate.now());
+    }
 }
