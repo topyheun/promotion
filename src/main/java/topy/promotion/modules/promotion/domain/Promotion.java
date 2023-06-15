@@ -52,4 +52,8 @@ public class Promotion {
     public void endPromotion() {
         this.status = PromotionStatus.OFF;
     }
+
+    public boolean isProceedingPromotion() {
+        return this.status == PromotionStatus.ON;
+    }
 }
