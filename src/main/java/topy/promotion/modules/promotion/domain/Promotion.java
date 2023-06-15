@@ -36,9 +36,6 @@ public class Promotion {
     private List<Participation> participations = new ArrayList<>();
 
     @OneToMany(mappedBy = "promotion")
-    private List<Winner> winners = new ArrayList<>();
-
-    @OneToMany(mappedBy = "promotion")
     private List<Reward> rewards = new ArrayList<>();
 
     @Builder

@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import topy.promotion.modules.common.BaseEntity;
 import topy.promotion.modules.promotion.domain.Participation;
-import topy.promotion.modules.promotion.domain.Winner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +31,6 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user")
     private List<Participation> participations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<Winner> winners = new ArrayList<>();
 
     @Builder
     public User(String username, String password, String email) {

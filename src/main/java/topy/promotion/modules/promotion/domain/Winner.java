@@ -17,18 +17,12 @@ public class Winner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "winner_win_date")
-    private LocalDateTime winDate;
+    @Column(name = "winner_name")
+    private String winnerName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_sq")
-    private User user;
+    @Column(name = "winner_participated_promotion")
+    private String participatedPromotionTitle;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "promotion_sq")
-    private Promotion promotion;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reward_sq")
-    private Reward reward;
+    @Column(name = "winner_rank")
+    private Rank winnerRank;
 }

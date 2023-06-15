@@ -6,9 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -27,9 +24,6 @@ public class Reward {
     @Column(name = "reward_rank")
     @Enumerated(EnumType.STRING)
     private Rank rank;
-
-    @OneToMany(mappedBy = "reward")
-    private List<Winner> winners = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "promotion_sq")
