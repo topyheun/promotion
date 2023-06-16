@@ -16,6 +16,7 @@ public class Const {
     public static final String PROMOTION_USED_PROMOTION = "사용중인 프로모션 입니다";
     public static final String PROMOTION_NOT_FOUND_PROMOTION = "프로모션을 찾을 수 없습니다.";
     public static final String PROMOTION_NOTHING_REGISTERED_PROMOTION = "현재 등록된 프로모션이 없습니다.";
+    public static final String PROMOTION_WRONG_PROMOTION_PERIOD = "프로모션의 시작일자와 종료일자를 다시 한번 확인해주세요.";
 
     public static final String PROMOTION_DTO_NO_VALUES = "프로모션 정보를 작성해주세요";
 

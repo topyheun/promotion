@@ -7,6 +7,7 @@ import topy.promotion.modules.promotion.domain.Promotion;
 import topy.promotion.modules.promotion.domain.Reward;
 import topy.promotion.modules.promotion.dto.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class PromotionService {
         if (promotionRepository.existsByTitle(registerPromotionRequest.getTitle())) {
             throw new RuntimeException(PROMOTION_USED_PROMOTION);
         }
+        checkStartDateBeforeEndDate(registerPromotionRequest.getStartDate(), registerPromotionRequest.getEndDate());
 
         Promotion promotion = Promotion.builder()
                 .title(registerPromotionRequest.getTitle())
@@ -36,6 +38,12 @@ public class PromotionService {
         return RegisterPromotionResponse.builder()
                 .title(registerPromotionRequest.getTitle())
                 .build();
+    }
+
+    private void checkStartDateBeforeEndDate(LocalDateTime startDate, LocalDateTime endDate) {
+        if (startDate.isAfter(endDate)) {
+            throw new RuntimeException(PROMOTION_WRONG_PROMOTION_PERIOD);
+        }
     }
 
     public List<SearchPromotionResponse> getPromotion() {
