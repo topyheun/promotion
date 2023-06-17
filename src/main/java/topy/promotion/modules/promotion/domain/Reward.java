@@ -36,4 +36,8 @@ public class Reward {
         this.rank = rank;
         this.promotion = promotion;
     }
+
+    public void decreaseQuantity() {
+        this.quantity -= 1;
+    }
 }
