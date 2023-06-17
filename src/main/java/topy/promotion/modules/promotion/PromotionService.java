@@ -3,8 +3,7 @@ package topy.promotion.modules.promotion;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import topy.promotion.modules.promotion.domain.Promotion;
-import topy.promotion.modules.promotion.domain.Reward;
+import topy.promotion.modules.promotion.domain.*;
 import topy.promotion.modules.promotion.dto.*;
 
 import java.time.LocalDateTime;
@@ -66,22 +65,33 @@ public class PromotionService {
     }
 
     @Transactional
-    public RegisterRewardResponse createReward(String promotionTitle, RegisterRewardRequest registerRewardRequest) {
+    public List<RegisterRewardResponse> createRewards(String promotionTitle, List<RegisterRewardRequest> registerRewardRequests) {
+        Promotion promotion = findPromotionByTitle(promotionTitle);
+
+        List<RegisterRewardResponse> registerRewardResponses = new ArrayList<>();
+        for (RegisterRewardRequest registerRewardRequest : registerRewardRequests) {
+            Reward reward = Reward.builder()
+                    .name(registerRewardRequest.getName())
+                    .quantity(registerRewardRequest.getQuantity())
+                    .rank(registerRewardRequest.getRank())
+                    .promotion(promotion)
+                    .build();
+            rewardRepository.save(reward);
+
+            RegisterRewardResponse registerRewardResponse = RegisterRewardResponse.builder()
+                    .name(registerRewardRequest.getName())
+                    .quantity(registerRewardRequest.getQuantity())
+                    .rank(registerRewardRequest.getRank())
+                    .build();
+            registerRewardResponses.add(registerRewardResponse);
+        }
+
+        return registerRewardResponses;
+    }
+
+    private Promotion findPromotionByTitle(String promotionTitle) {
         Promotion promotion = promotionRepository.findByTitle(promotionTitle)
                 .orElseThrow(() -> new RuntimeException(PROMOTION_NOT_FOUND_PROMOTION));
-
-        Reward reward = Reward.builder()
-                .name(registerRewardRequest.getName())
-                .quantity(registerRewardRequest.getQuantity())
-                .rank(registerRewardRequest.getRank())
-                .promotion(promotion)
-                .build();
-        rewardRepository.save(reward);
-
-        return RegisterRewardResponse.builder()
-                .name(registerRewardRequest.getName())
-                .quantity(registerRewardRequest.getQuantity())
-                .rank(registerRewardRequest.getRank())
-                .build();
+        return promotion;
     }
 }
