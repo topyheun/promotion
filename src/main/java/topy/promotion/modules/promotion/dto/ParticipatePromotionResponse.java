@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter네
+@Getter
 @Setter
 @NoArgsConstructor
 public class ParticipatePromotionResponse {
