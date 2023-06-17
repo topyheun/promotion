@@ -2,6 +2,7 @@ package topy.promotion.modules.promotion.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import topy.promotion.modules.common.BaseDateEntity;
@@ -22,5 +23,16 @@ public class Winner extends BaseDateEntity {
     private String participatedPromotionTitle;
 
     @Column(name = "winner_rank")
-    private Rank winnerRank;
+    private String winnerRank;
+
+    @Column(name = "winner_reward")
+    private String winnerReward;
+
+    @Builder
+    public Winner(String winnerName, String participatedPromotionTitle, String winnerRank, String winnerReward) {
+        this.winnerName = winnerName;
+        this.participatedPromotionTitle = participatedPromotionTitle;
+        this.winnerRank = winnerRank;
+        this.winnerReward = winnerReward;
+    }
 }
