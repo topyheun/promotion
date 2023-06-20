@@ -5,9 +5,10 @@ import org.springframework.stereotype.Repository;
 import topy.promotion.modules.promotion.domain.Participation;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Repository
 public interface ParticipationRepository extends JpaRepository<Participation, Long> {
 
-    Participation findByUser_IdAndCreatedAt(Long userSq, LocalDate now);
+    Optional<Participation> findByUser_IdAndCreatedAtAndPromotion_Title(Long userSq, LocalDate now, String promotionTitle);
 }
