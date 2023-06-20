@@ -5,7 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import topy.promotion.modules.promotion.domain.*;
 import topy.promotion.modules.promotion.dto.*;
+import topy.promotion.modules.user.User;
+import topy.promotion.modules.user.UserRepository;
 
+import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +23,9 @@ public class PromotionService {
 
     private final PromotionRepository promotionRepository;
     private final RewardRepository rewardRepository;
+    private final ParticipationRepository participationRepository;
+    private final UserRepository userRepository;
+    private final WinnerRepository winnerRepository;
 
     @Transactional
     public RegisterPromotionResponse createPromotion(RegisterPromotionRequest registerPromotionRequest) {
@@ -89,9 +96,84 @@ public class PromotionService {
         return registerRewardResponses;
     }
 
+    //    @DistributedLock(key = "#promotionTitle")
+    @Transactional
+    public ParticipatePromotionResponse drawLot(String promotionTitle, ParticipatePromotionRequest participatePromotionRequest) {
+        Promotion promotion = findPromotionByTitle(promotionTitle);
+        if (!promotion.isProceedingPromotion()) {
+            throw new RuntimeException(PROMOTION_NOT_PROCEEDING_PROMOTION);
+        }
+        validateDuplicateParticipation(participatePromotionRequest.getUserSq(), promotionTitle);
+
+        Reward reward = getReward(promotionTitle);
+
+        User user = findUserById(participatePromotionRequest.getUserSq());
+
+        Participation participation = Participation.builder()
+                .user(user)
+                .promotion(promotion)
+                .build();
+        participationRepository.save(participation);
+
+        if (reward != null) {
+            reward.decreaseQuantity();
+            rewardRepository.save(reward);
+
+            Winner winner = Winner.builder()
+                    .winnerName(user.getUsername())
+                    .participatedPromotionTitle(promotionTitle)
+                    .winnerRank(reward.getRank().toString())
+                    .winnerReward(reward.getName())
+                    .build();
+            winnerRepository.save(winner);
+
+            return ParticipatePromotionResponse.builder()
+                    .promotionTitle(promotionTitle)
+                    .rewardName(reward.getName())
+                    .winRank(reward.getRank().toString())
+                    .build();
+        } else {
+            return ParticipatePromotionResponse.builder()
+                    .promotionTitle(promotionTitle)
+                    .rewardName(PARTICIPATION_DTO_FAIL_MESSAGE)
+                    .winRank(PARTICIPATION_DTO_FAIL_MESSAGE)
+                    .build();
+        }
+    }
+
     private Promotion findPromotionByTitle(String promotionTitle) {
         Promotion promotion = promotionRepository.findByTitle(promotionTitle)
                 .orElseThrow(() -> new RuntimeException(PROMOTION_NOT_FOUND_PROMOTION));
         return promotion;
+    }
+
+    private void validateDuplicateParticipation(Long userSq, String promotionTitle) {
+        participationRepository.findByUser_IdAndCreatedAtAndPromotion_Title(userSq, LocalDate.now(), promotionTitle)
+                .ifPresent(participation -> {
+                    throw new RuntimeException(PROMOTION_DUPLICATE_PARTICIPATION_PROMOTION);
+                });
+    }
+
+    private Reward getReward(String promotionTitle) {
+        SecureRandom secureRandom = new SecureRandom();
+        int randomNumber = secureRandom.nextInt(100) + 1;
+
+        Rank rank;
+        if (randomNumber <= 5) {
+            rank = Rank.FIRST;
+        } else if (randomNumber <= 15) {
+            rank = Rank.SECOND;
+        } else if (randomNumber <= 30) {
+            rank = Rank.THIRD;
+        } else {
+            return null;
+        }
+        return rewardRepository.findByRankAndPromotion_Title(rank, promotionTitle);
+    }
+
+    private User findUserById(Long userSq) {
+        User user = userRepository.findById(userSq)
+                .orElseThrow(() -> new RuntimeException(USER_NOT_FOUND_ACCOUNT));
+        return user;
     }
 }

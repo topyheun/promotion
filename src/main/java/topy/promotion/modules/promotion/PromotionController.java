@@ -32,4 +32,11 @@ public class PromotionController {
         List<RegisterRewardResponse> registerRewardResponses = promotionService.createRewards(promotionTitle, registerRewardRequests);
         return ResponseEntity.ok().body(registerRewardResponses);
     }
+
+    @PostMapping("/promotions/{promotionTitle}/participation")
+    public ResponseEntity<ParticipatePromotionResponse> participatePromotion(@PathVariable String promotionTitle,
+                                                                             @RequestBody @Valid ParticipatePromotionRequest participatePromotionRequest) {
+        ParticipatePromotionResponse participatePromotionResponse = promotionService.drawLot(promotionTitle, participatePromotionRequest);
+        return ResponseEntity.ok().body(participatePromotionResponse);
+    }
 }
