@@ -77,6 +77,9 @@ public class PromotionService {
 
         List<RegisterRewardResponse> registerRewardResponses = new ArrayList<>();
         for (RegisterRewardRequest registerRewardRequest : registerRewardRequests) {
+            if (rewardRepository.existsByNameAndPromotion_Title(registerRewardRequest.getName(), promotionTitle)) {
+                throw new RuntimeException(REWARD_DUPLICATE_REWARD);
+            }
             Reward reward = Reward.builder()
                     .name(registerRewardRequest.getName())
                     .quantity(registerRewardRequest.getQuantity())
