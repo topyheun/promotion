@@ -9,4 +9,6 @@ import topy.promotion.modules.promotion.domain.Reward;
 public interface RewardRepository extends JpaRepository<Reward, Long> {
 
     Reward findByRankAndPromotion_Title(Rank first, String promotionTitle);
+
+    boolean existsByNameAndPromotion_Title(String name, String promotionTitle);
 }
