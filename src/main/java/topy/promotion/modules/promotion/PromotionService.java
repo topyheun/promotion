@@ -5,6 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import topy.promotion.modules.promotion.domain.*;
 import topy.promotion.modules.promotion.dto.*;
+import topy.promotion.modules.promotion.repository.ParticipationRepository;
+import topy.promotion.modules.promotion.repository.PromotionRepository;
+import topy.promotion.modules.promotion.repository.RewardRepository;
+import topy.promotion.modules.promotion.repository.WinnerRepository;
 import topy.promotion.modules.user.User;
 import topy.promotion.modules.user.UserRepository;
 

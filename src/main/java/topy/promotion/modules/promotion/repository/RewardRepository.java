@@ -1,8 +1,7 @@
-package topy.promotion.modules.promotion;
+package topy.promotion.modules.promotion.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import topy.promotion.modules.promotion.domain.Rank;
 import topy.promotion.modules.promotion.domain.Reward;
 
 @Repository
