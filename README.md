@@ -7,21 +7,17 @@ The main purpose of this project is to control concurrency issues. Therefore, on
 
 ## Stack
 Spring Boot 3.1<br>
-MariaDB, JPA<br>
+MariaDB, JPA, Querydsl<br>
 Redis(Redisson)<br>
 Junit5, Mokito<br>
-AWS
+AWS, Docker
 <br><br>
 
 ## ERD
-<img width="1052" alt="image" src="https://github.com/topyheun/promotion/assets/41532299/001d69e0-19cb-4d81-abee-a84034daa50c"><br>
+<img width="1106" alt="image" src="https://github.com/topyheun/promotion/assets/41532299/5fdc1b98-442c-4cf1-88b0-26a1f9a19443"><br>
 [[ erd docs ]](https://dbdocs.io/gmsdl1994/topy_promotion)
 <br><br>
 
 ## API Documentation
-<img width="955" alt="image" src="https://github.com/topyheun/promotion/assets/41532299/d2b7d55e-cfe5-4712-bbc0-d2347a36b158"><br>
-<br><br>
-
-## API Testing
-TODO
+<img width="916" alt="image" src="https://github.com/topyheun/promotion/assets/41532299/9d21cbd5-aca6-41b1-919c-4b95aeffb0ff"><br>
 <br><br>
