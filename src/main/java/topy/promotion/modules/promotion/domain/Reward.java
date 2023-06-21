@@ -38,6 +38,13 @@ public class Reward {
     }
 
     public void decreaseQuantity() {
+//        validateStockCount();
         this.quantity -= 1;
     }
+
+//    private void validateStockCount() {
+//        if (quantity < 1) {
+//            throw new RuntimeException()
+//        }
+//    }
 }
