@@ -1,4 +1,4 @@
-package topy.promotion.modules.promotion;
+package topy.promotion.modules.promotion.repository;
 
 import lombok.extern.java.Log;
 import org.springframework.data.jpa.repository.JpaRepository;
