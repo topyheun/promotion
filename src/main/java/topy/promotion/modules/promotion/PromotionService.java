@@ -3,6 +3,7 @@ package topy.promotion.modules.promotion;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import topy.promotion.infra.aop.DistributedLock;
 import topy.promotion.modules.promotion.domain.*;
 import topy.promotion.modules.promotion.dto.*;
 import topy.promotion.modules.promotion.repository.ParticipationRepository;
@@ -102,7 +103,7 @@ public class PromotionService {
         return registerRewardResponses;
     }
 
-    //    @DistributedLock(key = "#promotionTitle")
+    @DistributedLock(key = "#promotionTitle")
     @Transactional
     public ParticipatePromotionResponse drawLot(String promotionTitle, ParticipatePromotionRequest participatePromotionRequest) {
         Promotion promotion = findPromotionByTitle(promotionTitle);
@@ -181,5 +182,20 @@ public class PromotionService {
         User user = userRepository.findById(userSq)
                 .orElseThrow(() -> new RuntimeException(USER_NOT_FOUND_ACCOUNT));
         return user;
+    }
+
+    public List<SearchWinnerResponse> getWinners(String promotionTitle) {
+        List<Winner> winners = winnerRepository.findAllByParticipatedPromotionTitle(promotionTitle);
+
+        List<SearchWinnerResponse> searchWinnerResponses = new ArrayList<>();
+        for (Winner winner : winners) {
+            SearchWinnerResponse searchWinnerResponse = SearchWinnerResponse.builder()
+                    .winnerName(winner.getWinnerName())
+                    .winnerRank(winner.getWinnerRank())
+                    .winnerReward(winner.getWinnerReward())
+                    .build();
+            searchWinnerResponses.add(searchWinnerResponse);
+        }
+        return searchWinnerResponses;
     }
 }

@@ -39,4 +39,10 @@ public class PromotionController {
         ParticipatePromotionResponse participatePromotionResponse = promotionService.drawLot(promotionTitle, participatePromotionRequest);
         return ResponseEntity.ok().body(participatePromotionResponse);
     }
+
+    @GetMapping("/promotions/{promotionTitle}/winners")
+    public ResponseEntity searchWinners(@PathVariable String promotionTitle) {
+        List<SearchWinnerResponse> searchWinnerResponse = promotionService.getWinners(promotionTitle);
+        return ResponseEntity.ok().body(searchWinnerResponse);
+    }
 }
