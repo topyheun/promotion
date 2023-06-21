@@ -5,9 +5,7 @@ import org.springframework.stereotype.Repository;
 import topy.promotion.modules.promotion.domain.Reward;
 
 @Repository
-public interface RewardRepository extends JpaRepository<Reward, Long> {
-
-    Reward findByRankAndPromotion_Title(Rank first, String promotionTitle);
+public interface RewardRepository extends JpaRepository<Reward, Long>, RewardRepositoryCustom {
 
     boolean existsByNameAndPromotion_Title(String name, String promotionTitle);
 }

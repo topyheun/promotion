@@ -166,16 +166,16 @@ public class PromotionService {
         int randomNumber = secureRandom.nextInt(100) + 1;
 
         Rank rank;
-        if (randomNumber <= 5) {
+        if (randomNumber <= 10) {
             rank = Rank.FIRST;
-        } else if (randomNumber <= 15) {
+        } else if (randomNumber <= 25) {
             rank = Rank.SECOND;
-        } else if (randomNumber <= 30) {
+        } else if (randomNumber <= 45) {
             rank = Rank.THIRD;
         } else {
             return null;
         }
-        return rewardRepository.findByRankAndPromotion_Title(rank, promotionTitle);
+        return rewardRepository.getAvailableReward(rank, promotionTitle);
     }
 
     private User findUserById(Long userSq) {
