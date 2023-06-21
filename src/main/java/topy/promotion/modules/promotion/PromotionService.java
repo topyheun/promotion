@@ -99,7 +99,6 @@ public class PromotionService {
                     .build();
             registerRewardResponses.add(registerRewardResponse);
         }
-
         return registerRewardResponses;
     }
 
