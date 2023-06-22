@@ -15,9 +15,9 @@ AWS, Docker
 
 ## ERD
 <img width="1106" alt="image" src="https://github.com/topyheun/promotion/assets/41532299/5fdc1b98-442c-4cf1-88b0-26a1f9a19443"><br>
-[[ erd docs ]](https://dbdocs.io/gmsdl1994/topy_promotion)
+[[ ERD Docs ]](https://dbdocs.io/gmsdl1994/topy_promotion)
 <br><br>
 
 ## API Documentation
-<img width="916" alt="image" src="https://github.com/topyheun/promotion/assets/41532299/9d21cbd5-aca6-41b1-919c-4b95aeffb0ff"><br>
+To gain a comprehensive understanding of the Topy's Promotion API, please refer to our detailed API Documentation available at [[ API Docs ]](https://topys-organization.gitbook.io/topys-promotion/). It provides information about each endpoint, including request and response structures
 <br><br>
