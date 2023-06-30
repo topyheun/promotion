@@ -15,9 +15,9 @@ public class DynamicValueParser {
         ExpressionParser parser = new SpelExpressionParser();
         StandardEvaluationContext context = new StandardEvaluationContext();
 
-        IntStream.range(0, parameterNames.length)
-                .forEach(index -> context.setVariable(parameterNames[index], args[index]));
-
+        for (int i = 0; i < parameterNames.length; i++) {
+            context.setVariable(parameterNames[i], args[i]);
+        }
         return parser.parseExpression(key).getValue(context, Object.class);
     }
 }

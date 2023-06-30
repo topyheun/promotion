@@ -23,36 +23,28 @@ public class DistributedLockAop {
 
     @Around("@annotation(topy.promotion.infra.aop.DistributedLock)")
     public Object lock(final ProceedingJoinPoint joinPoint) throws Throwable {
-        Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
         DistributedLock distributedLock = method.getAnnotation(DistributedLock.class);
 
-        String key = buildLockKey(distributedLock, joinPoint);
-
+        String key = REDISSON_LOCK_PREFIX + DynamicValueParser.getDynamicValue(signature.getParameterNames(), joinPoint.getArgs(), distributedLock.key());
         RLock rLock = redissonClient.getLock(key);
-        boolean lockAcquired = false;
 
         try {
-            lockAcquired = rLock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(), distributedLock.timeUnit());
-
-            if (lockAcquired) {
-                return aopTransactionExecutor.proceed(joinPoint);
-            } else {
+            boolean available = rLock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(), distributedLock.timeUnit());
+            if (!available) {
                 return false;
             }
+
+            return aopTransactionExecutor.proceed(joinPoint);
+        } catch (InterruptedException e) {
+            throw new InterruptedException();
         } finally {
-            if (lockAcquired) {
+            try {
                 rLock.unlock();
+            } catch (IllegalMonitorStateException e) {
+                System.out.println(e.getMessage());
             }
         }
-    }
-
-    private String buildLockKey(DistributedLock distributedLock, ProceedingJoinPoint joinPoint) {
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        Object dynamicKey = DynamicValueParser.getDynamicValue(
-                methodSignature.getParameterNames(),
-                joinPoint.getArgs(),
-                distributedLock.key()
-        );
-        return REDISSON_LOCK_PREFIX + dynamicKey;
     }
 }
