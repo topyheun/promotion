@@ -8,15 +8,16 @@ spring:
         show_sql: false
         format_sql: false
 
-  # MariaDB
+  # H2
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/topy_promotion?characterEncoding=UTF-8&serverTimezone=UTC
-    username: topy
-    password: topy
     hikari:
-      connection-timeout: 5000
-      max-lifetime: 30000
+      jdbc-url: jdbc:h2:mem:test:MODE=MYSQL
+    username: admin
+    password: 1234
 
   # Redis
   data:
@@ -28,8 +29,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: kkil0421@gmail.com
-    password: vbrvsamtcvlhhwie
+    username: username
+    password: password
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: ture

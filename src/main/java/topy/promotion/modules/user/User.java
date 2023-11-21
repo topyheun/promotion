@@ -11,6 +11,7 @@ import topy.promotion.modules.promotion.domain.Participation;
 import java.util.ArrayList;
 import java.util.List;
 
+@Table(name="CUSTOM_USER")
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter

@@ -32,6 +32,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    runtimeOnly 'com.h2database:h2'
 
     // QueryDsl
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
