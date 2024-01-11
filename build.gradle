@@ -26,6 +26,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.redisson:redisson-spring-boot-starter:3.21.3'
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    implementation 'org.projectlombok:lombok:1.18.28'
 
     compileOnly 'org.projectlombok:lombok'
 

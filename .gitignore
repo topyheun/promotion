@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### QueryDSL ###
+src/main/generated
