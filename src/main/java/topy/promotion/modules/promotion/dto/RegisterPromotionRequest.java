@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import topy.promotion.modules.promotion.domain.Promotion;
 
 import static topy.promotion.modules.common.Const.PROMOTION_DTO_NO_VALUES;
 
@@ -19,4 +20,12 @@ public class RegisterPromotionRequest {
 
     @NotNull(message = PROMOTION_DTO_NO_VALUES)
     private LocalDateTime endDate;
+
+    public Promotion toPromotion() {
+        return Promotion.builder()
+            .title(title)
+            .startDate(startDate)
+            .endDate(endDate)
+            .build();
+    }
 }

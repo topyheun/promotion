@@ -1,15 +1,17 @@
 package topy.promotion.modules.promotion.dto;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegisterPromotionResponse {
 
     private String title;
 
-    @Builder
-    public RegisterPromotionResponse(String title) {
-        this.title = title;
+    public static RegisterPromotionResponse of(String title) {
+        return new RegisterPromotionResponse(title);
     }
 }

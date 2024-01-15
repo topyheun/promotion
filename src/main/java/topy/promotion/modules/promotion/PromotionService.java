@@ -56,16 +56,10 @@ public class PromotionService {
         }
         checkStartDateBeforeEndDate(registerPromotionRequest.getStartDate(), registerPromotionRequest.getEndDate());
 
-        Promotion promotion = Promotion.builder()
-                .title(registerPromotionRequest.getTitle())
-                .startDate(registerPromotionRequest.getStartDate())
-                .endDate(registerPromotionRequest.getEndDate())
-                .build();
+        Promotion promotion = registerPromotionRequest.toPromotion();
         promotionRepository.save(promotion);
 
-        return RegisterPromotionResponse.builder()
-                .title(registerPromotionRequest.getTitle())
-                .build();
+        return RegisterPromotionResponse.of(promotion.getTitle());
     }
 
     private void checkStartDateBeforeEndDate(LocalDateTime startDate, LocalDateTime endDate) {
