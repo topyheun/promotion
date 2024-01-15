@@ -1,12 +1,21 @@
 package topy.promotion.modules.user.dto;
 
+import static topy.promotion.modules.common.Const.USER_DTO_NO_EMAIL;
+import static topy.promotion.modules.common.Const.USER_DTO_NO_PASSWORD;
+import static topy.promotion.modules.common.Const.USER_DTO_NO_USERNAME;
+import static topy.promotion.modules.common.Const.USER_DTO_WRONG_EMAIL_FORMAT;
+import static topy.promotion.modules.common.Const.USER_DTO_WRONG_PASSWORD_FORMAT;
+import static topy.promotion.modules.common.Const.USER_DTO_WRONG_USERNAME_FORMAT;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import static topy.promotion.modules.common.Const.*;
-
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserSignUpRequest {
 
     @NotBlank(message = USER_DTO_NO_USERNAME)
