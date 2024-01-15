@@ -14,6 +14,7 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,11 +51,13 @@ public class PromotionService {
     private final WinnerRepository winnerRepository;
 
     @Transactional
-    public RegisterPromotionResponse createPromotion(RegisterPromotionRequest registerPromotionRequest) {
+    public RegisterPromotionResponse createPromotion(
+        RegisterPromotionRequest registerPromotionRequest) {
         if (promotionRepository.existsByTitle(registerPromotionRequest.getTitle())) {
             throw new RuntimeException(PROMOTION_USED_PROMOTION);
         }
-        checkStartDateBeforeEndDate(registerPromotionRequest.getStartDate(), registerPromotionRequest.getEndDate());
+        checkStartDateBeforeEndDate(registerPromotionRequest.getStartDate(),
+            registerPromotionRequest.getEndDate());
 
         Promotion promotion = registerPromotionRequest.toPromotion();
         promotionRepository.save(promotion);
@@ -79,27 +82,29 @@ public class PromotionService {
     }
 
     @Transactional
-    public List<RegisterRewardResponse> createRewards(String promotionTitle, List<RegisterRewardRequest> registerRewardRequests) {
+    public List<RegisterRewardResponse> createRewards(String promotionTitle,
+        List<RegisterRewardRequest> registerRewardRequests) {
         Promotion promotion = findPromotionByTitle(promotionTitle);
 
         List<RegisterRewardResponse> registerRewardResponses = new ArrayList<>();
         for (RegisterRewardRequest registerRewardRequest : registerRewardRequests) {
-            if (rewardRepository.existsByNameAndPromotion_Title(registerRewardRequest.getName(), promotionTitle)) {
+            if (rewardRepository.existsByNameAndPromotion_Title(registerRewardRequest.getName(),
+                promotionTitle)) {
                 throw new RuntimeException(REWARD_DUPLICATE_REWARD);
             }
             Reward reward = Reward.builder()
-                    .name(registerRewardRequest.getName())
-                    .quantity(registerRewardRequest.getQuantity())
-                    .rank(registerRewardRequest.getRank())
-                    .promotion(promotion)
-                    .build();
+                .name(registerRewardRequest.getName())
+                .quantity(registerRewardRequest.getQuantity())
+                .rank(registerRewardRequest.getRank())
+                .promotion(promotion)
+                .build();
             rewardRepository.save(reward);
 
             RegisterRewardResponse registerRewardResponse = RegisterRewardResponse.builder()
-                    .name(registerRewardRequest.getName())
-                    .quantity(registerRewardRequest.getQuantity())
-                    .rank(registerRewardRequest.getRank())
-                    .build();
+                .name(registerRewardRequest.getName())
+                .quantity(registerRewardRequest.getQuantity())
+                .rank(registerRewardRequest.getRank())
+                .build();
             registerRewardResponses.add(registerRewardResponse);
         }
         return registerRewardResponses;
@@ -107,7 +112,8 @@ public class PromotionService {
 
     @DistributedLock(key = "#promotionTitle")
     @Transactional
-    public ParticipatePromotionResponse drawLot(String promotionTitle, ParticipatePromotionRequest participatePromotionRequest) {
+    public ParticipatePromotionResponse drawLot(String promotionTitle,
+        ParticipatePromotionRequest participatePromotionRequest) {
         Promotion promotion = findPromotionByTitle(promotionTitle);
         if (!promotion.isProceedingPromotion()) {
             throw new RuntimeException(PROMOTION_NOT_PROCEEDING_PROMOTION);
@@ -119,9 +125,9 @@ public class PromotionService {
         User user = findUserById(participatePromotionRequest.getUserSq());
 
         Participation participation = Participation.builder()
-                .user(user)
-                .promotion(promotion)
-                .build();
+            .user(user)
+            .promotion(promotion)
+            .build();
         participationRepository.save(participation);
 
         if (reward != null) {
@@ -129,38 +135,38 @@ public class PromotionService {
             rewardRepository.save(reward);
 
             Winner winner = Winner.builder()
-                    .winnerName(user.getUsername())
-                    .participatedPromotionTitle(promotionTitle)
-                    .winnerRank(reward.getRank().toString())
-                    .winnerReward(reward.getName())
-                    .build();
+                .winnerName(user.getUsername())
+                .participatedPromotionTitle(promotionTitle)
+                .winnerRank(reward.getRank().toString())
+                .winnerReward(reward.getName())
+                .build();
             winnerRepository.save(winner);
 
             return ParticipatePromotionResponse.builder()
-                    .promotionTitle(promotionTitle)
-                    .rewardName(reward.getName())
-                    .winRank(reward.getRank().toString())
-                    .build();
+                .promotionTitle(promotionTitle)
+                .rewardName(reward.getName())
+                .winRank(reward.getRank().toString())
+                .build();
         } else {
             return ParticipatePromotionResponse.builder()
-                    .promotionTitle(promotionTitle)
-                    .rewardName(PARTICIPATION_DTO_FAIL_MESSAGE)
-                    .winRank(PARTICIPATION_DTO_FAIL_MESSAGE)
-                    .build();
+                .promotionTitle(promotionTitle)
+                .rewardName(PARTICIPATION_DTO_FAIL_MESSAGE)
+                .winRank(PARTICIPATION_DTO_FAIL_MESSAGE)
+                .build();
         }
     }
 
     private Promotion findPromotionByTitle(String promotionTitle) {
         Promotion promotion = promotionRepository.findByTitle(promotionTitle)
-                .orElseThrow(() -> new RuntimeException(PROMOTION_NOT_FOUND_PROMOTION));
+            .orElseThrow(() -> new RuntimeException(PROMOTION_NOT_FOUND_PROMOTION));
         return promotion;
     }
 
     private void validateDuplicateParticipation(Long userSq, String promotionTitle) {
         participationRepository.checkUserParticipationInTodayPromotion(userSq, promotionTitle)
-                .ifPresent(participation -> {
-                    throw new RuntimeException(PROMOTION_DUPLICATE_PARTICIPATION_PROMOTION);
-                });
+            .ifPresent(participation -> {
+                throw new RuntimeException(PROMOTION_DUPLICATE_PARTICIPATION_PROMOTION);
+            });
     }
 
     private Reward getReward(String promotionTitle) {
@@ -182,7 +188,7 @@ public class PromotionService {
 
     private User findUserById(Long userSq) {
         User user = userRepository.findById(userSq)
-                .orElseThrow(() -> new RuntimeException(USER_NOT_FOUND_ACCOUNT));
+            .orElseThrow(() -> new RuntimeException(USER_NOT_FOUND_ACCOUNT));
         return user;
     }
 
@@ -192,10 +198,10 @@ public class PromotionService {
         List<SearchWinnerResponse> searchWinnerResponses = new ArrayList<>();
         for (Winner winner : winners) {
             SearchWinnerResponse searchWinnerResponse = SearchWinnerResponse.builder()
-                    .winnerName(winner.getWinnerName())
-                    .winnerRank(winner.getWinnerRank())
-                    .winnerReward(winner.getWinnerReward())
-                    .build();
+                .winnerName(winner.getWinnerName())
+                .winnerRank(winner.getWinnerRank())
+                .winnerReward(winner.getWinnerReward())
+                .build();
             searchWinnerResponses.add(searchWinnerResponse);
         }
         return searchWinnerResponses;

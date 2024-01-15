@@ -1,13 +1,12 @@
 package topy.promotion.modules.promotion.dto;
 
+import static topy.promotion.modules.common.Const.PROMOTION_DTO_NO_VALUES;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-
 import java.time.LocalDateTime;
+import lombok.Getter;
 import topy.promotion.modules.promotion.domain.Promotion;
-
-import static topy.promotion.modules.common.Const.PROMOTION_DTO_NO_VALUES;
 
 @Getter
 public class RegisterPromotionRequest {

@@ -1,5 +1,6 @@
 package topy.promotion.infra.aop;
 
+import java.lang.reflect.Method;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -8,8 +9,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
-
-import java.lang.reflect.Method;
 
 @Aspect
 @Component
@@ -32,7 +31,8 @@ public class DistributedLockAop {
         boolean lockAcquired = false;
 
         try {
-            lockAcquired = rLock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(), distributedLock.timeUnit());
+            lockAcquired = rLock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(),
+                distributedLock.timeUnit());
 
             if (lockAcquired) {
                 return aopTransactionExecutor.proceed(joinPoint);
@@ -49,9 +49,9 @@ public class DistributedLockAop {
     private String buildLockKey(DistributedLock distributedLock, ProceedingJoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Object dynamicKey = DynamicValueParser.getDynamicValue(
-                methodSignature.getParameterNames(),
-                joinPoint.getArgs(),
-                distributedLock.key()
+            methodSignature.getParameterNames(),
+            joinPoint.getArgs(),
+            distributedLock.key()
         );
         return REDISSON_LOCK_PREFIX + dynamicKey;
     }

@@ -17,9 +17,9 @@ public class RewardRepositoryImpl implements RewardRepositoryCustom {
     public Reward getAvailableReward(Rank rank, String promotionTitle) {
         QReward reward = QReward.reward;
         return jpaQueryFactory.selectFrom(reward)
-                .where(reward.rank.eq(rank)
-                        .and(reward.promotion.title.eq(promotionTitle))
-                        .and(reward.quantity.goe(1)))
-                .fetchOne();
+            .where(reward.rank.eq(rank)
+                .and(reward.promotion.title.eq(promotionTitle))
+                .and(reward.quantity.goe(1)))
+            .fetchOne();
     }
 }

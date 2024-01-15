@@ -1,13 +1,12 @@
 package topy.promotion.modules.promotion.scheduler;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import topy.promotion.modules.promotion.repository.PromotionRepository;
 import topy.promotion.modules.promotion.domain.Promotion;
-
-import java.time.LocalDateTime;
-import java.util.List;
+import topy.promotion.modules.promotion.repository.PromotionRepository;
 
 @Component
 @RequiredArgsConstructor
