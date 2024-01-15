@@ -73,18 +73,9 @@ public class PromotionService {
         if (promotions.isEmpty()) {
             throw new RuntimeException(PROMOTION_NOTHING_REGISTERED_PROMOTION);
         }
-        List<SearchPromotionResponse> promotionList = new ArrayList<>();
-
-        for (Promotion promotion : promotions) {
-            SearchPromotionResponse searchPromotionResponse = SearchPromotionResponse.builder()
-                    .title(promotion.getTitle())
-                    .startDate(promotion.getStartDate())
-                    .endDate(promotion.getEndDate())
-                    .status(promotion.getStatus())
-                    .build();
-            promotionList.add(searchPromotionResponse);
-        }
-        return promotionList;
+        return promotions.stream()
+            .map(SearchPromotionResponse::of)
+            .collect(Collectors.toList());
     }
 
     @Transactional

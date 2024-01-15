@@ -2,13 +2,15 @@ package topy.promotion.modules.promotion.dto;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import java.time.LocalDateTime;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import topy.promotion.modules.promotion.domain.Promotion;
 import topy.promotion.modules.promotion.domain.PromotionStatus;
 
-import java.time.LocalDateTime;
-
-@Getter
+@Data
+@NoArgsConstructor
 public class SearchPromotionResponse {
 
     private String title;
@@ -26,5 +28,14 @@ public class SearchPromotionResponse {
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+    }
+
+    public static SearchPromotionResponse of(Promotion promotion) {
+        return SearchPromotionResponse.builder()
+            .title(promotion.getTitle())
+            .startDate(promotion.getStartDate())
+            .endDate(promotion.getEndDate())
+            .status(promotion.getStatus())
+            .build();
     }
 }
