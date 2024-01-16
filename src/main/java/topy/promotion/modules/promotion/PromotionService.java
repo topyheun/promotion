@@ -12,7 +12,6 @@ import static topy.promotion.modules.common.Const.USER_NOT_FOUND_ACCOUNT;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -186,18 +185,11 @@ public class PromotionService {
         }
     }
 
-    public List<SearchWinnerResponse> getWinners(String promotionTitle) {
+    public List<SearchWinnerResponse> getWinners(final String promotionTitle) {
         List<Winner> winners = winnerRepository.findAllByParticipatedPromotionTitle(promotionTitle);
 
-        List<SearchWinnerResponse> searchWinnerResponses = new ArrayList<>();
-        for (Winner winner : winners) {
-            SearchWinnerResponse searchWinnerResponse = SearchWinnerResponse.builder()
-                .winnerName(winner.getWinnerName())
-                .winnerRank(winner.getWinnerRank())
-                .winnerReward(winner.getWinnerReward())
-                .build();
-            searchWinnerResponses.add(searchWinnerResponse);
-        }
-        return searchWinnerResponses;
+        return winners.stream()
+            .map(SearchWinnerResponse::toResponse)
+            .collect(Collectors.toList());
     }
 }

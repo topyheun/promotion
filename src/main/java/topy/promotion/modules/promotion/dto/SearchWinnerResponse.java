@@ -18,4 +18,12 @@ public class SearchWinnerResponse {
         this.winnerRank = winnerRank;
         this.winnerReward = winnerReward;
     }
+
+    public static SearchWinnerResponse toResponse(Winner winner) {
+        return SearchWinnerResponse.builder()
+            .winnerName(winner.getWinnerName())
+            .winnerRank(winner.getWinnerRank())
+            .winnerReward(winner.getWinnerReward())
+            .build();
+    }
 }
