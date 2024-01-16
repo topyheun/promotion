@@ -80,31 +80,27 @@ public class PromotionService {
     }
 
     @Transactional
-    public List<RegisterRewardResponse> createRewards(String promotionTitle, List<RegisterRewardRequest> registerRewardRequests) {
+    public List<RegisterRewardResponse> createRewards(final String promotionTitle, List<RegisterRewardRequest> registerRewardRequests) {
         Promotion promotion = findPromotionByTitle(promotionTitle);
+        checkExistsReward(promotionTitle, registerRewardRequests);
 
-        List<RegisterRewardResponse> registerRewardResponses = new ArrayList<>();
-        for (RegisterRewardRequest registerRewardRequest : registerRewardRequests) {
-            if (rewardRepository.existsByNameAndPromotion_Title(registerRewardRequest.getName(),
-                promotionTitle)) {
+        List<Reward> rewards = registerRewardRequests.stream()
+            .map(registerRewardRequest -> registerRewardRequest.toReward(promotion))
+            .collect(Collectors.toList());
+        rewardRepository.saveAll(rewards);
+
+        List<RegisterRewardResponse> registerRewardResponses = registerRewardRequests.stream()
+            .map(RegisterRewardRequest::toResponse)
+            .collect(Collectors.toList());
+        return registerRewardResponses;
+    }
+
+    private void checkExistsReward(final String promotionTitle, List<RegisterRewardRequest> registerRewardRequests) {
+        for (final RegisterRewardRequest registerRewardRequest : registerRewardRequests) {
+            if (rewardRepository.existsByNameAndPromotion_Title(registerRewardRequest.getName(), promotionTitle)) {
                 throw new RuntimeException(REWARD_DUPLICATE_REWARD);
             }
-            Reward reward = Reward.builder()
-                .name(registerRewardRequest.getName())
-                .quantity(registerRewardRequest.getQuantity())
-                .rank(registerRewardRequest.getRank())
-                .promotion(promotion)
-                .build();
-            rewardRepository.save(reward);
-
-            RegisterRewardResponse registerRewardResponse = RegisterRewardResponse.builder()
-                .name(registerRewardRequest.getName())
-                .quantity(registerRewardRequest.getQuantity())
-                .rank(registerRewardRequest.getRank())
-                .build();
-            registerRewardResponses.add(registerRewardResponse);
         }
-        return registerRewardResponses;
     }
 
     @DistributedLock(key = "#promotionTitle")

@@ -8,10 +8,16 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import topy.promotion.modules.promotion.domain.Promotion;
 import topy.promotion.modules.promotion.domain.Rank;
+import topy.promotion.modules.promotion.domain.Reward;
 
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegisterRewardRequest {
 
     @NotBlank(message = REWARD_DTO_NO_VALUES)
@@ -24,4 +30,21 @@ public class RegisterRewardRequest {
     @NotNull(message = REWARD_DTO_NO_VALUES)
     @Enumerated(EnumType.STRING)
     private Rank rank;
+
+    public Reward toReward(Promotion promotion) {
+        return Reward.builder()
+            .name(name)
+            .quantity(quantity)
+            .rank(rank)
+            .promotion(promotion)
+            .build();
+    }
+
+    public RegisterRewardResponse toResponse() {
+        return RegisterRewardResponse.builder()
+            .name(name)
+            .quantity(quantity)
+            .rank(rank)
+            .build();
+    }
 }
