@@ -51,13 +51,11 @@ public class PromotionService {
     private final WinnerRepository winnerRepository;
 
     @Transactional
-    public RegisterPromotionResponse createPromotion(
-        RegisterPromotionRequest registerPromotionRequest) {
+    public RegisterPromotionResponse createPromotion(RegisterPromotionRequest registerPromotionRequest) {
         if (promotionRepository.existsByTitle(registerPromotionRequest.getTitle())) {
             throw new RuntimeException(PROMOTION_USED_PROMOTION);
         }
-        checkStartDateBeforeEndDate(registerPromotionRequest.getStartDate(),
-            registerPromotionRequest.getEndDate());
+        checkStartDateBeforeEndDate(registerPromotionRequest.getStartDate(), registerPromotionRequest.getEndDate());
 
         Promotion promotion = registerPromotionRequest.toPromotion();
         promotionRepository.save(promotion);
@@ -65,7 +63,7 @@ public class PromotionService {
         return RegisterPromotionResponse.of(promotion.getTitle());
     }
 
-    private void checkStartDateBeforeEndDate(LocalDateTime startDate, LocalDateTime endDate) {
+    private void checkStartDateBeforeEndDate(final LocalDateTime startDate, final LocalDateTime endDate) {
         if (startDate.isAfter(endDate)) {
             throw new RuntimeException(PROMOTION_WRONG_PROMOTION_PERIOD);
         }
