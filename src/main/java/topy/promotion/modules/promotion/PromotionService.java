@@ -105,8 +105,7 @@ public class PromotionService {
 
     @DistributedLock(key = "#promotionTitle")
     @Transactional
-    public ParticipatePromotionResponse drawLot(String promotionTitle,
-        ParticipatePromotionRequest participatePromotionRequest) {
+    public ParticipatePromotionResponse drawLot(final String promotionTitle, ParticipatePromotionRequest participatePromotionRequest) {
         Promotion promotion = findPromotionByTitle(promotionTitle);
         if (!promotion.isProceedingPromotion()) {
             throw new RuntimeException(PROMOTION_NOT_PROCEEDING_PROMOTION);
@@ -114,39 +113,10 @@ public class PromotionService {
         validateDuplicateParticipation(participatePromotionRequest.getUserSq(), promotionTitle);
 
         Reward reward = getReward(promotionTitle);
-
         User user = findUserById(participatePromotionRequest.getUserSq());
 
-        Participation participation = Participation.builder()
-            .user(user)
-            .promotion(promotion)
-            .build();
-        participationRepository.save(participation);
-
-        if (reward != null) {
-            reward.decreaseQuantity();
-            rewardRepository.save(reward);
-
-            Winner winner = Winner.builder()
-                .winnerName(user.getUsername())
-                .participatedPromotionTitle(promotionTitle)
-                .winnerRank(reward.getRank().toString())
-                .winnerReward(reward.getName())
-                .build();
-            winnerRepository.save(winner);
-
-            return ParticipatePromotionResponse.builder()
-                .promotionTitle(promotionTitle)
-                .rewardName(reward.getName())
-                .winRank(reward.getRank().toString())
-                .build();
-        } else {
-            return ParticipatePromotionResponse.builder()
-                .promotionTitle(promotionTitle)
-                .rewardName(PARTICIPATION_DTO_FAIL_MESSAGE)
-                .winRank(PARTICIPATION_DTO_FAIL_MESSAGE)
-                .build();
-        }
+        saveParticipation(user, promotion);
+        return participatePromotionResponse(promotionTitle, user, reward);
     }
 
     private Promotion findPromotionByTitle(String promotionTitle) {
@@ -155,14 +125,22 @@ public class PromotionService {
         return promotion;
     }
 
-    private void validateDuplicateParticipation(Long userSq, String promotionTitle) {
+    private void validateDuplicateParticipation(final Long userSq, final String promotionTitle) {
         participationRepository.checkUserParticipationInTodayPromotion(userSq, promotionTitle)
             .ifPresent(participation -> {
                 throw new RuntimeException(PROMOTION_DUPLICATE_PARTICIPATION_PROMOTION);
             });
     }
 
-    private Reward getReward(String promotionTitle) {
+    private void saveParticipation(User user, Promotion promotion) {
+        Participation participation = Participation.builder()
+            .user(user)
+            .promotion(promotion)
+            .build();
+        participationRepository.save(participation);
+    }
+
+    private Reward getReward(final String promotionTitle) {
         SecureRandom secureRandom = new SecureRandom();
         int randomNumber = secureRandom.nextInt(100) + 1;
 
@@ -179,10 +157,33 @@ public class PromotionService {
         return rewardRepository.getAvailableReward(rank, promotionTitle);
     }
 
-    private User findUserById(Long userSq) {
+    private User findUserById(final Long userSq) {
         User user = userRepository.findById(userSq)
             .orElseThrow(() -> new RuntimeException(USER_NOT_FOUND_ACCOUNT));
         return user;
+    }
+
+    private void createWinner(String promotionTitle, User user, Reward reward) {
+        Winner winner = Winner.builder()
+            .winnerName(user.getUsername())
+            .participatedPromotionTitle(promotionTitle)
+            .winnerRank(reward.getRank().toString())
+            .winnerReward(reward.getName())
+            .build();
+        winnerRepository.save(winner);
+    }
+
+    private ParticipatePromotionResponse participatePromotionResponse(String promotionTitle, User user, Reward reward) {
+        if (reward != null) {
+            reward.decreaseQuantity();
+            rewardRepository.save(reward);
+
+            createWinner(promotionTitle, user, reward);
+
+            return ParticipatePromotionResponse.of(promotionTitle, reward.getName(), reward.getRank().toString());
+        } else {
+            return ParticipatePromotionResponse.of(promotionTitle, PARTICIPATION_DTO_FAIL_MESSAGE, PARTICIPATION_DTO_FAIL_MESSAGE);
+        }
     }
 
     public List<SearchWinnerResponse> getWinners(String promotionTitle) {

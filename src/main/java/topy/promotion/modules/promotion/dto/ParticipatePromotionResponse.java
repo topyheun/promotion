@@ -22,4 +22,12 @@ public class ParticipatePromotionResponse {
         this.winRank = winRank;
         this.rewardName = rewardName;
     }
+
+    public static ParticipatePromotionResponse of(String promotionTitle, String rewardName, String winRank) {
+        return ParticipatePromotionResponse.builder()
+            .promotionTitle(promotionTitle)
+            .rewardName(rewardName)
+            .winRank(winRank)
+            .build();
+    }
 }
