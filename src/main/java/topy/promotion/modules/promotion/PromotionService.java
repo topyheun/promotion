@@ -82,8 +82,7 @@ public class PromotionService {
     }
 
     @Transactional
-    public List<RegisterRewardResponse> createRewards(String promotionTitle,
-        List<RegisterRewardRequest> registerRewardRequests) {
+    public List<RegisterRewardResponse> createRewards(String promotionTitle, List<RegisterRewardRequest> registerRewardRequests) {
         Promotion promotion = findPromotionByTitle(promotionTitle);
 
         List<RegisterRewardResponse> registerRewardResponses = new ArrayList<>();
