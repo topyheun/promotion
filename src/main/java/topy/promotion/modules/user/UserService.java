@@ -19,12 +19,7 @@ public class UserService {
         if (userRepository.existsByUsername(userSignUpRequest.getUsername())) {
             throw new RuntimeException(USER_USED_ACCOUNT);
         }
-
-        User user = User.builder()
-            .username(userSignUpRequest.getUsername())
-            .password(userSignUpRequest.getPassword())
-            .email(userSignUpRequest.getEmail())
-            .build();
+        User user = userSignUpRequest.toUser();
         userRepository.save(user);
     }
 }

@@ -12,6 +12,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import topy.promotion.modules.user.User;
 
 @Data
 @NoArgsConstructor
@@ -29,4 +30,12 @@ public class UserSignUpRequest {
     @NotBlank(message = USER_DTO_NO_EMAIL)
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", message = USER_DTO_WRONG_EMAIL_FORMAT)
     private String email;
+
+    public User toUser() {
+        return User.builder()
+            .username(username)
+            .password(password)
+            .email(email)
+            .build();
+    }
 }
