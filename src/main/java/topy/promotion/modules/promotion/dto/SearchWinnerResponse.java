@@ -2,6 +2,7 @@ package topy.promotion.modules.promotion.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import topy.promotion.modules.promotion.domain.Winner;
 
 @Getter
 public class SearchWinnerResponse {

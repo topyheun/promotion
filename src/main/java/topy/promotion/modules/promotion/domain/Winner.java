@@ -33,8 +33,7 @@ public class Winner extends BaseDateEntity {
     private String winnerReward;
 
     @Builder
-    public Winner(String winnerName, String participatedPromotionTitle, String winnerRank,
-        String winnerReward) {
+    public Winner(String winnerName, String participatedPromotionTitle, String winnerRank, String winnerReward) {
         this.winnerName = winnerName;
         this.participatedPromotionTitle = participatedPromotionTitle;
         this.winnerRank = winnerRank;
