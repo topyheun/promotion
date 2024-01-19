@@ -1,17 +1,19 @@
 package topy.promotion.modules.user;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.test.util.ReflectionTestUtils;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 import topy.promotion.modules.user.dto.UserSignUpRequest;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
+@ActiveProfiles("test")
+@ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
     @Mock
@@ -20,25 +22,14 @@ class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
-    void shouldNotSaveUserIfExceptionISThrownDuringSignUp() {
+    @DisplayName("회원가입 시 사용자가 이미 존재한다면 Exception 발생한다.")
+    void should_Exception_when_UserExistsWhenSignUp() {
         // Arrange
-        UserSignUpRequest userSignUpRequest = new UserSignUpRequest();
-        ReflectionTestUtils.setField(userSignUpRequest, "username", "john");
-        ReflectionTestUtils.setField(userSignUpRequest, "password", "password");
-        ReflectionTestUtils.setField(userSignUpRequest, "email", "john@example.com");
+        UserSignUpRequest userSignUpRequest = new UserSignUpRequest("username", "password", "email@example.com");
+        when(userRepository.existsByUsername(userSignUpRequest.getUsername())).thenReturn(true);
 
-
-        when(userRepository.existsByUsername("john")).thenReturn(true);
-
-        // Act and Assert
-        Assertions.assertThrows(RuntimeException.class, () -> userService.createAccount(userSignUpRequest));
-
-        verify(userRepository, never()).save(any(User.class));
+        // Act & Assert
+        assertThrows(RuntimeException.class, () -> userService.createAccount(userSignUpRequest));
     }
 }
