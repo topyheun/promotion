@@ -35,7 +35,7 @@
 
 ```mermaid
 sequenceDiagram
-    participant Client as Client
+    actor Client as Client
     participant Server as Server
     participant Redis as Redis
     participant 추첨로직 as 프로모션 추첨
