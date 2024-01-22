@@ -1,47 +1,58 @@
-# Promotion
+# 프로모션
 
-## 목차
-- [프로젝트 소개](#프로젝트-소개)
-- [실행 방법](#실행-방법)
-- [ERD](#ERD)
-- [API 문서](#API-문서)
+이 프로젝트는 Redis의 Redisson 라이브러리와 사용자 정의 어노테이션을 활용한 AOP를 통해 Distributed Lock을 구현하였습니다. 이를 통해 프로모션 참여 시 발생하는 동시성 이슈를 테스트합니다. 주요 기능은 회원들에게 매일 한 번씩 프로모션에 참여할 기회를 제공하고, 추첨을 통해 보상을 주는 기능입니다.
 
-## 프로젝트 소개
-Promotion 프로젝트는 회원들에게 매일 한 번씩 '추첨하기' 기회를 제공하는 이벤트 중심의 애플리케이션입니다. 이 기능을 통해 사용자는 1등, 2등, 3등, 또는 꽝 중 하나의 결과를 얻게 됩니다.
-상품의 재고를 정확하게 관리하여 이벤트의 공정성과 정확성을 보장하기 위해, '추첨하기' 기능에 분산락을 적용했습니다. 이 분산락은 Redis의 Redisson을 이용하여 구현되었으며, AOP와 어노테이션을 활용하여 코드 중복을 최소화하는 방식으로 설계되었습니다.
+[![ERD Docs](https://img.shields.io/badge/ERD-Docs-blue)](https://dbdocs.io/gmsdl1994/topy_promotion)
+[![GitBook](https://img.shields.io/badge/GitBook-Read%20Docs-green)](https://topys-organization.gitbook.io/topys-promotion/)
 
-## 실행 방법
-```bash
-[ Step 1 ]
+#### 사용 기술
 
-# redis server run 
-docker-compose up -d
+- Java, Gradle, SpringBoot, JUnit5, Mockito, Redis, JPA, QueryDSL
+
+## 주요 기능
+
+1. Distributed Lock
+2. AOP
+
+## 아키텍처 및 설계
+
+### 1. Distributed Lock
+
+#### 1.1 Redisson 사용
+
+- Redisson은 Lettuce보다 다양한 기능을 제공
+    - RLock 인터페이스 - 락 획득을 위한 최대 대기 시간(waitTime), 락 유지 시간(leaseTime)을 설정할 수 있는 기능을 제공
+    - 락이 사용 가능할 때까지 자동으로 재시도하는 기능을 제공
+    - 락을 유지하는 동안 주기적으로 락의 만료 시간을 갱신하는 기능을 제공
+    - pub-sub 구조 (락을 획득하려는 프로세스들 간의 경합을 줄임으로써 시간 지연 최소화)
+
+### 2. AOP
+
+- @Aspect, @Around 어노테이션을 사용하여 메서드 수준에서 분산락 제어
+    - 분산락 관리 중앙화
+
+## Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant Client as Client
+    participant Server as Server
+    participant Redis as Redis
+    participant 추첨로직 as 프로모션 추첨
+    Client ->> Server: 프로모션 참여 요청
+    Note right of Server: 사용자의 프로모션 참여 요청 처리 시작
+    Server ->> Redis: Redisson을 이용한 락 요청
+    alt 락 획득 성공
+        Redis -->> Server: 락 획득 응답
+        Note right of Server: 락을 획득하고<br/>동시성 제어
+        Server ->> 추첨로직: 추첨 진행
+        추첨로직 -->> Server: 추첨 결과 반환
+        Server ->> Redis: 락 해제 요청
+        Redis -->> Server: 락 해제 처리
+        Server -->> Client: 추첨 결과 응답
+    else 락 획득 실패
+        Redis -->> Server: 락 획득 실패
+        Server -->> Client: 에러 메시지 응답
+    end
+
 ```
-```bash
-[ Step 2 ]
-
-# SMTP 설정
-# application.yml
-
-mail:
-  host: smtp.gmail.com
-  port: 587
-  username: {Google 계정명}
-  password: {Google 앱 비밀번호}
-  properties:
-    mail.smtp.auth: true
-    mail.smtp.starttls.enable: ture
-```
-```bash
-[ Step 3 ]
-
-# Spring Boot Application Run
-```
-
-## ERD
-<img width="400" alt="image" src="https://github.com/topyheun/promotion/assets/41532299/5fdc1b98-442c-4cf1-88b0-26a1f9a19443"><br>
-[[ ERD Docs ]](https://dbdocs.io/gmsdl1994/topy_promotion)
-
-## API 문서
-API의 상세한 개요, 사용 예제, 파라미터 설명, 응답 형식 등을 포함한 자세한 문서는 GitBook에 호스팅되어 있습니다.<br>
-[[ API Docs ]](https://topys-organization.gitbook.io/topys-promotion/)
