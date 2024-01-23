@@ -2,19 +2,15 @@ package topy.promotion.modules.promotion.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
-@NoArgsConstructor
 public class ParticipatePromotionResponse {
 
-    private String promotionTitle;
+    private final String promotionTitle;
 
-    private String winRank;
+    private final String winRank;
 
-    private String rewardName;
+    private final String rewardName;
 
     @Builder
     public ParticipatePromotionResponse(String promotionTitle, String winRank, String rewardName) {

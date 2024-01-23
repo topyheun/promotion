@@ -5,22 +5,20 @@ import jakarta.persistence.Enumerated;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import topy.promotion.modules.promotion.domain.Promotion;
 import topy.promotion.modules.promotion.domain.PromotionStatus;
 
 @Data
-@NoArgsConstructor
 public class SearchPromotionResponse {
 
-    private String title;
+    private final String title;
 
-    private LocalDateTime startDate;
+    private final LocalDateTime startDate;
 
-    private LocalDateTime endDate;
+    private final LocalDateTime endDate;
 
     @Enumerated(EnumType.STRING)
-    private PromotionStatus status;
+    private final PromotionStatus status;
 
     @Builder
     public SearchPromotionResponse(String title, LocalDateTime startDate, LocalDateTime endDate, PromotionStatus status) {

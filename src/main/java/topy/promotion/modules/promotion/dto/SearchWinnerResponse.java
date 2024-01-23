@@ -7,11 +7,11 @@ import topy.promotion.modules.promotion.domain.Winner;
 @Getter
 public class SearchWinnerResponse {
 
-    private String winnerName;
+    private final String winnerName;
 
-    private String winnerRank;
+    private final String winnerRank;
 
-    private String winnerReward;
+    private final String winnerReward;
 
     @Builder
     public SearchWinnerResponse(String winnerName, String winnerRank, String winnerReward) {

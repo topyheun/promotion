@@ -9,12 +9,12 @@ import topy.promotion.modules.promotion.domain.Rank;
 @Getter
 public class RegisterRewardResponse {
 
-    private String name;
+    private final String name;
 
-    private int quantity;
+    private final int quantity;
 
     @Enumerated(EnumType.STRING)
-    private Rank rank;
+    private final Rank rank;
 
     @Builder
     public RegisterRewardResponse(String name, int quantity, Rank rank) {
