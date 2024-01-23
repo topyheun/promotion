@@ -1,6 +1,6 @@
 package topy.promotion.modules.common;
 
-public class Const {
+public final class Const {
 
     public static final String SUCCESS = "성공";
 
