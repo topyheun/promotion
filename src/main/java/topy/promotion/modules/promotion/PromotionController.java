@@ -17,24 +17,32 @@ import topy.promotion.modules.promotion.dto.RegisterRewardRequest;
 import topy.promotion.modules.promotion.dto.RegisterRewardResponse;
 import topy.promotion.modules.promotion.dto.SearchPromotionResponse;
 import topy.promotion.modules.promotion.dto.SearchWinnerResponse;
+import topy.promotion.modules.promotion.service.PromotionCreateService;
+import topy.promotion.modules.promotion.service.PromotionDrawService;
+import topy.promotion.modules.promotion.service.PromotionSearchService;
+import topy.promotion.modules.promotion.service.RewardCreateService;
+import topy.promotion.modules.promotion.service.WinnerSearchService;
 
 @RestController
 @RequiredArgsConstructor
 public class PromotionController {
 
-    private final PromotionService promotionService;
+    private final PromotionCreateService promotionCreateService;
+    private final PromotionSearchService promotionSearchService;
+    private final RewardCreateService rewardCreateService;
+    private final PromotionDrawService promotionDrawService;
+    private final WinnerSearchService winnerSearchService;
 
     @PostMapping("/promotions")
     public ResponseEntity<RegisterPromotionResponse> registerPromotion(
         @RequestBody @Valid RegisterPromotionRequest registerPromotionRequest) {
-        RegisterPromotionResponse registerPromotionResponse = promotionService.createPromotion(
-            registerPromotionRequest);
+        RegisterPromotionResponse registerPromotionResponse = promotionCreateService.createPromotion(registerPromotionRequest);
         return ResponseEntity.ok().body(registerPromotionResponse);
     }
 
     @GetMapping("/promotions")
     public ResponseEntity<List<SearchPromotionResponse>> searchPromotions() {
-        List<SearchPromotionResponse> searchPromotionResponses = promotionService.getPromotion();
+        List<SearchPromotionResponse> searchPromotionResponses = promotionSearchService.getPromotion();
         return ResponseEntity.ok().body(searchPromotionResponses);
     }
 
@@ -42,8 +50,7 @@ public class PromotionController {
     public ResponseEntity<List<RegisterRewardResponse>> registerReward(
         @PathVariable String promotionTitle,
         @RequestBody @Valid List<RegisterRewardRequest> registerRewardRequests) {
-        List<RegisterRewardResponse> registerRewardResponses = promotionService.createRewards(
-            promotionTitle, registerRewardRequests);
+        List<RegisterRewardResponse> registerRewardResponses = rewardCreateService.createRewards(promotionTitle, registerRewardRequests);
         return ResponseEntity.ok().body(registerRewardResponses);
     }
 
@@ -51,15 +58,13 @@ public class PromotionController {
     public ResponseEntity<ParticipatePromotionResponse> participatePromotion(
         @PathVariable String promotionTitle,
         @RequestBody @Valid ParticipatePromotionRequest participatePromotionRequest) {
-        ParticipatePromotionResponse participatePromotionResponse = promotionService.drawLot(
-            promotionTitle, participatePromotionRequest);
+        ParticipatePromotionResponse participatePromotionResponse = promotionDrawService.draw(promotionTitle, participatePromotionRequest);
         return ResponseEntity.ok().body(participatePromotionResponse);
     }
 
     @GetMapping("/promotions/{promotionTitle}/winners")
     public ResponseEntity searchWinners(@PathVariable String promotionTitle) {
-        List<SearchWinnerResponse> searchWinnerResponse = promotionService.getWinners(
-            promotionTitle);
+        List<SearchWinnerResponse> searchWinnerResponse = winnerSearchService.getWinners(promotionTitle);
         return ResponseEntity.ok().body(searchWinnerResponse);
     }
 }
