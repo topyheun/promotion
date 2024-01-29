@@ -14,7 +14,7 @@ spring:
     hikari:
       jdbc-url: jdbc:h2:mem:test:MODE=MYSQL
     username: admin
-    password: 0000
+    password:
   data:
     redis:
       host: localhost
