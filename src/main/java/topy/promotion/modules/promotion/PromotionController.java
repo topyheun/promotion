@@ -34,8 +34,7 @@ public class PromotionController {
     private final WinnerSearchService winnerSearchService;
 
     @PostMapping("/promotions")
-    public ResponseEntity<RegisterPromotionResponse> registerPromotion(
-        @RequestBody @Valid RegisterPromotionRequest registerPromotionRequest) {
+    public ResponseEntity<RegisterPromotionResponse> registerPromotion(@RequestBody @Valid RegisterPromotionRequest registerPromotionRequest) {
         RegisterPromotionResponse registerPromotionResponse = promotionCreateService.createPromotion(registerPromotionRequest);
         return ResponseEntity.ok().body(registerPromotionResponse);
     }
@@ -47,17 +46,13 @@ public class PromotionController {
     }
 
     @PostMapping("/promotions/{promotionTitle}/rewards")
-    public ResponseEntity<List<RegisterRewardResponse>> registerReward(
-        @PathVariable String promotionTitle,
-        @RequestBody @Valid List<RegisterRewardRequest> registerRewardRequests) {
+    public ResponseEntity<List<RegisterRewardResponse>> registerReward(@PathVariable String promotionTitle, @RequestBody @Valid List<RegisterRewardRequest> registerRewardRequests) {
         List<RegisterRewardResponse> registerRewardResponses = rewardCreateService.createRewards(promotionTitle, registerRewardRequests);
         return ResponseEntity.ok().body(registerRewardResponses);
     }
 
     @PostMapping("/promotions/{promotionTitle}/participation")
-    public ResponseEntity<ParticipatePromotionResponse> participatePromotion(
-        @PathVariable String promotionTitle,
-        @RequestBody @Valid ParticipatePromotionRequest participatePromotionRequest) {
+    public ResponseEntity<ParticipatePromotionResponse> participatePromotion(@PathVariable String promotionTitle, @RequestBody @Valid ParticipatePromotionRequest participatePromotionRequest) {
         ParticipatePromotionResponse participatePromotionResponse = promotionDrawService.draw(promotionTitle, participatePromotionRequest);
         return ResponseEntity.ok().body(participatePromotionResponse);
     }
