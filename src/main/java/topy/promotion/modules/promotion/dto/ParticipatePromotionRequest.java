@@ -1,9 +1,10 @@
 package topy.promotion.modules.promotion.dto;
 
-import lombok.Getter;
+import lombok.Builder;
 
-@Getter
-public class ParticipatePromotionRequest {
+@Builder
+public record ParticipatePromotionRequest(
+    Long userSq
+) {
 
-    private Long userSq;
 }

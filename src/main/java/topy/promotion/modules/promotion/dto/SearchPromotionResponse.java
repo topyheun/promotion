@@ -4,29 +4,20 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import java.time.LocalDateTime;
 import lombok.Builder;
-import lombok.Data;
 import topy.promotion.modules.promotion.domain.Promotion;
 import topy.promotion.modules.promotion.domain.PromotionStatus;
 
-@Data
-public class SearchPromotionResponse {
+@Builder
+public record SearchPromotionResponse(
+    String title,
 
-    private final String title;
+    LocalDateTime startDate,
 
-    private final LocalDateTime startDate;
-
-    private final LocalDateTime endDate;
+    LocalDateTime endDate,
 
     @Enumerated(EnumType.STRING)
-    private final PromotionStatus status;
-
-    @Builder
-    public SearchPromotionResponse(String title, LocalDateTime startDate, LocalDateTime endDate, PromotionStatus status) {
-        this.title = title;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.status = status;
-    }
+    PromotionStatus status
+) {
 
     public static SearchPromotionResponse of(Promotion promotion) {
         return SearchPromotionResponse.builder()

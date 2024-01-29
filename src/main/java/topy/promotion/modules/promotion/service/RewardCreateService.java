@@ -38,7 +38,7 @@ public class RewardCreateService {
 
     private void checkExistsReward(final String promotionTitle, List<RegisterRewardRequest> registerRewardRequests) {
         for (final RegisterRewardRequest registerRewardRequest : registerRewardRequests) {
-            if (rewardRepository.existsByNameAndPromotion_Title(registerRewardRequest.getName(), promotionTitle)) {
+            if (rewardRepository.existsByNameAndPromotion_Title(registerRewardRequest.name(), promotionTitle)) {
                 throw new RuntimeException(REWARD_DUPLICATE_REWARD);
             }
         }

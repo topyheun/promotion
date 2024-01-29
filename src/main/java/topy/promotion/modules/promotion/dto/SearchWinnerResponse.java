@@ -1,24 +1,16 @@
 package topy.promotion.modules.promotion.dto;
 
 import lombok.Builder;
-import lombok.Getter;
 import topy.promotion.modules.promotion.domain.Winner;
 
-@Getter
-public class SearchWinnerResponse {
+@Builder
+public record SearchWinnerResponse(
+    String winnerName,
 
-    private final String winnerName;
+    String winnerRank,
 
-    private final String winnerRank;
-
-    private final String winnerReward;
-
-    @Builder
-    public SearchWinnerResponse(String winnerName, String winnerRank, String winnerReward) {
-        this.winnerName = winnerName;
-        this.winnerRank = winnerRank;
-        this.winnerReward = winnerReward;
-    }
+    String winnerReward
+) {
 
     public static SearchWinnerResponse toResponse(Winner winner) {
         return SearchWinnerResponse.builder()

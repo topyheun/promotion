@@ -35,7 +35,7 @@ public class PromotionDrawService {
         if (!promotion.isProceedingPromotion()) {
             throw new RuntimeException(PROMOTION_NOT_PROCEEDING_PROMOTION);
         }
-        validateDuplicateParticipation(participatePromotionRequest.getUserSq(), promotionTitle);
+        validateDuplicateParticipation(participatePromotionRequest.userSq(), promotionTitle);
 
         Reward reward = rewardSearchService.getReward(promotionTitle);
 
@@ -44,7 +44,7 @@ public class PromotionDrawService {
         }
         reward.decreaseQuantity();
 
-        User user = userService.findUserById(participatePromotionRequest.getUserSq());
+        User user = userService.findUserById(participatePromotionRequest.userSq());
         saveParticipation(user, promotion);
 
         winnerCreateService.createWinner(promotionTitle, user, reward);

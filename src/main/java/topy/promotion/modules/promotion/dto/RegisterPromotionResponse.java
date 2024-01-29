@@ -1,15 +1,11 @@
 package topy.promotion.modules.promotion.dto;
 
-import lombok.Getter;
+import lombok.Builder;
 
-@Getter
-public class RegisterPromotionResponse {
-
-    private final String title;
-
-    public RegisterPromotionResponse(String title) {
-        this.title = title;
-    }
+@Builder
+public record RegisterPromotionResponse(
+    String title
+) {
 
     public static RegisterPromotionResponse of(String title) {
         return new RegisterPromotionResponse(title);

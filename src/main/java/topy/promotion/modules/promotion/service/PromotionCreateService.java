@@ -19,10 +19,10 @@ public class PromotionCreateService {
     private final PromotionRepository promotionRepository;
 
     public RegisterPromotionResponse createPromotion(RegisterPromotionRequest registerPromotionRequest) {
-        if (promotionRepository.existsByTitle(registerPromotionRequest.getTitle())) {
+        if (promotionRepository.existsByTitle(registerPromotionRequest.title())) {
             throw new RuntimeException(PROMOTION_USED_PROMOTION);
         }
-        if (registerPromotionRequest.getStartDate().isAfter(registerPromotionRequest.getEndDate())) {
+        if (registerPromotionRequest.startDate().isAfter(registerPromotionRequest.endDate())) {
             throw new RuntimeException(PROMOTION_WRONG_PROMOTION_PERIOD);
         }
 
