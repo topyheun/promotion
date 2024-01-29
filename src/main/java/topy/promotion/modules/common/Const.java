@@ -10,8 +10,8 @@ public final class Const {
     public static final String USER_DTO_NO_USERNAME = "아이디를 입력해주세요";
     public static final String USER_DTO_NO_PASSWORD = "비밀번호를 입력해주세요";
     public static final String USER_DTO_NO_EMAIL = "이메일을 입력해주세요";
-    public static final String USER_DTO_WRONG_USERNAME_FORMAT = "올바르지 않은 아이디 양식입니다 (영문 소문자와 숫자를 사용해서 생성해주세요 글자 수 제한은 4 ~ 10자리 입니다)";
-    public static final String USER_DTO_WRONG_PASSWORD_FORMAT = "올바르지 않은 비밀번호 양식입니다";
+    public static final String USER_DTO_WRONG_USERNAME_FORMAT = "올바르지 않은 아이디 양식입니다 (영문 소문자와 숫자를 혼합하여 4 ~ 12자리의 아이디를 입력해주세요)";
+    public static final String USER_DTO_WRONG_PASSWORD_FORMAT = "올바르지 않은 비밀번호 양식입니다 (영문 대문자, 영문 소문자, 숫자, 특수문자를 혼합하여 최소 8자에서 최대 20자 사이의 비밀번호를 입력해주세요)";
     public static final String USER_DTO_WRONG_EMAIL_FORMAT = "올바르지 않은 이메일 양식입니다";
 
     public static final String PROMOTION_USED_PROMOTION = "사용중인 프로모션 입니다";
