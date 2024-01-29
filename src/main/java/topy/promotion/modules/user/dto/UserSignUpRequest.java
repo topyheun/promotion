@@ -20,7 +20,7 @@ import topy.promotion.modules.user.User;
 public class UserSignUpRequest {
 
     @NotBlank(message = USER_DTO_NO_USERNAME)
-    @Pattern(regexp = "^(?=.*[a-z])[a-z0-9]{0,10}$", message = USER_DTO_WRONG_USERNAME_FORMAT)
+    @Pattern(regexp = "^(?=.*[a-z])[a-z0-9]{4,12}$", message = USER_DTO_WRONG_USERNAME_FORMAT)
     private String username;
 
     @NotBlank(message = USER_DTO_NO_PASSWORD)
