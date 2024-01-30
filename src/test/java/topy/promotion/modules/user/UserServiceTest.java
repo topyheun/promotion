@@ -25,7 +25,7 @@ class UserServiceTest {
     void should_ThrowException_when_UserExistsWhenSignUp() {
         // Arrange
         UserSignUpRequest userSignUpRequest = new UserSignUpRequest("username", "password", "email@example.com");
-        when(userRepository.existsByUsername(userSignUpRequest.getUsername())).thenReturn(true);
+        when(userRepository.existsByUsername(userSignUpRequest.username())).thenReturn(true);
 
         // Act & Assert
         assertThrows(RuntimeException.class, () -> userService.createAccount(userSignUpRequest));

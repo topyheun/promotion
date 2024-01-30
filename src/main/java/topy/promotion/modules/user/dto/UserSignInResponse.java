@@ -1,15 +1,10 @@
 package topy.promotion.modules.user.dto;
 
 import lombok.Builder;
-import lombok.Getter;
 
-@Getter
-public class UserSignInResponse {
+@Builder
+public record UserSignInResponse(
+    String username
+) {
 
-    private String username;
-
-    @Builder
-    public UserSignInResponse(String username) {
-        this.username = username;
-    }
 }

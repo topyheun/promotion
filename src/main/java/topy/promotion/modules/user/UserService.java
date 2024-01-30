@@ -16,7 +16,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public void createAccount(UserSignUpRequest userSignUpRequest) {
-        if (userRepository.existsByUsername(userSignUpRequest.getUsername())) {
+        if (userRepository.existsByUsername(userSignUpRequest.username())) {
             throw new RuntimeException(USER_USED_ACCOUNT);
         }
         User user = userSignUpRequest.toUser();
