@@ -46,8 +46,8 @@ public class PromotionController {
     }
 
     @PostMapping("/promotions/{promotionTitle}/rewards")
-    public ResponseEntity<List<RegisterRewardResponse>> registerReward(@PathVariable String promotionTitle, @RequestBody @Valid List<RegisterRewardRequest> registerRewardRequests) {
-        List<RegisterRewardResponse> registerRewardResponses = rewardCreateService.createRewards(promotionTitle, registerRewardRequests);
+    public ResponseEntity<RegisterRewardResponse> registerReward(@PathVariable String promotionTitle, @RequestBody @Valid RegisterRewardRequest registerRewardRequest) {
+        RegisterRewardResponse registerRewardResponses = rewardCreateService.createRewards(promotionTitle, registerRewardRequest);
         return ResponseEntity.ok().body(registerRewardResponses);
     }
 

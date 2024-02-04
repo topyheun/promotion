@@ -19,7 +19,7 @@ public final class Const {
 
     public static final String PROMOTION_DTO_NO_VALUES = "프로모션 정보를 작성해주세요";
 
-    public static final String REWARD_DUPLICATE_REWARD = "해당 프로모션에 이미 존재하는 경품입니다.";
+    public static final String REWARD_DUPLICATE_REWARD = "해당 프로모션에는 이미 경품이 존재합니다.";
 
     public static final String REWARD_DTO_NO_VALUES = "경품 정보를 작성해주세요";
     public static final String REWARD_DTO_ENTER_NUMBER_GREATER_THAN_ZERO = "0 이상의 경품 수량을 입력해주세요";

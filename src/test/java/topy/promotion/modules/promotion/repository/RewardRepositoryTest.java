@@ -42,7 +42,7 @@ class RewardRepositoryTest {
         sut.save(reward);
 
         // Act
-        boolean actual = sut.existsByNameAndPromotion_Title(rewardName, promotionTitle);
+        boolean actual = sut.existsByPromotion_Title(promotionTitle);
 
         // Assert
         assertThat(actual).isTrue();

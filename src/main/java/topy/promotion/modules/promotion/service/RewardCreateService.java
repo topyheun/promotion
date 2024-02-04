@@ -2,8 +2,6 @@ package topy.promotion.modules.promotion.service;
 
 import static topy.promotion.modules.common.Const.REWARD_DUPLICATE_REWARD;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,26 +19,19 @@ public class RewardCreateService {
     private final RewardRepository rewardRepository;
     private final PromotionSearchService promotionSearchService;
 
-    public List<RegisterRewardResponse> createRewards(final String promotionTitle, List<RegisterRewardRequest> registerRewardRequests) {
+    public RegisterRewardResponse createRewards(final String promotionTitle, RegisterRewardRequest registerRewardRequest) {
         Promotion promotion = promotionSearchService.findPromotionByTitle(promotionTitle);
-        checkExistsReward(promotionTitle, registerRewardRequests);
+        checkExistsReward(promotionTitle);
 
-        List<Reward> rewards = registerRewardRequests.stream()
-            .map(registerRewardRequest -> registerRewardRequest.toReward(promotion))
-            .collect(Collectors.toList());
-        rewardRepository.saveAll(rewards);
+        Reward reward = registerRewardRequest.toReward(promotion);
+        rewardRepository.save(reward);
 
-        List<RegisterRewardResponse> registerRewardResponses = registerRewardRequests.stream()
-            .map(RegisterRewardRequest::toResponse)
-            .collect(Collectors.toList());
-        return registerRewardResponses;
+        return registerRewardRequest.toResponse();
     }
 
-    private void checkExistsReward(final String promotionTitle, List<RegisterRewardRequest> registerRewardRequests) {
-        for (final RegisterRewardRequest registerRewardRequest : registerRewardRequests) {
-            if (rewardRepository.existsByNameAndPromotion_Title(registerRewardRequest.name(), promotionTitle)) {
-                throw new RuntimeException(REWARD_DUPLICATE_REWARD);
-            }
+    private void checkExistsReward(final String promotionTitle) {
+        if (rewardRepository.existsByPromotion_Title(promotionTitle)) {
+            throw new RuntimeException(REWARD_DUPLICATE_REWARD);
         }
     }
 }

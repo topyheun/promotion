@@ -7,5 +7,5 @@ import topy.promotion.modules.promotion.domain.Reward;
 @Repository
 public interface RewardRepository extends JpaRepository<Reward, Long>, RewardRepositoryCustom {
 
-    boolean existsByNameAndPromotion_Title(String name, String promotionTitle);
+    boolean existsByPromotion_Title(String promotionTitle);
 }
