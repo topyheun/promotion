@@ -29,19 +29,11 @@ public class User extends BaseTimeEntity {
     @Column(name = "user_username")
     private String username;
 
-    @Column(name = "user_password")
-    private String password;
-
-    @Column(name = "user_email", unique = true)
-    private String email;
-
     @OneToMany(mappedBy = "user")
     private List<Participation> participations = new ArrayList<>();
 
     @Builder
-    public User(String username, String password, String email) {
+    public User(String username) {
         this.username = username;
-        this.password = password;
-        this.email = email;
     }
 }

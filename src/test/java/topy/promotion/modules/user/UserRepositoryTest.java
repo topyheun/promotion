@@ -26,8 +26,6 @@ class UserRepositoryTest {
 
         User user = User.builder()
             .username(username)
-            .password("0000")
-            .email("topy@naver.com")
             .build();
         sut.save(user);
 
