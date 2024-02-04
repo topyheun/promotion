@@ -31,8 +31,7 @@ public class DistributedLockAop {
         boolean lockAcquired = false;
 
         try {
-            lockAcquired = rLock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(),
-                distributedLock.timeUnit());
+            lockAcquired = rLock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(), distributedLock.timeUnit());
 
             if (lockAcquired) {
                 return aopTransactionExecutor.proceed(joinPoint);
