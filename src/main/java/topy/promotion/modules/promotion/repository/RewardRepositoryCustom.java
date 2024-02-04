@@ -5,5 +5,5 @@ import topy.promotion.modules.promotion.domain.Reward;
 
 public interface RewardRepositoryCustom {
 
-    Reward getAvailableReward(Rank first, String promotionTitle);
+    Reward getAvailableReward(Rank rank, String promotionTitle);
 }
