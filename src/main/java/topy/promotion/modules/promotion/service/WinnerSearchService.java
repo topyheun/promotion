@@ -1,5 +1,7 @@
 package topy.promotion.modules.promotion.service;
 
+import static topy.promotion.modules.common.Const.WINNER_NO_WINNER_USER;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,9 @@ public class WinnerSearchService {
 
     public List<SearchWinnerResponse> getWinners(final String promotionTitle) {
         List<Winner> winners = winnerRepository.findAllByParticipatedPromotionTitle(promotionTitle);
+        if (winners.isEmpty()) {
+            throw new RuntimeException(WINNER_NO_WINNER_USER);
+        }
 
         return winners.stream()
             .map(SearchWinnerResponse::toResponse)

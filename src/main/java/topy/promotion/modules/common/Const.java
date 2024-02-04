@@ -24,5 +24,5 @@ public final class Const {
     public static final String REWARD_DTO_NO_VALUES = "경품 정보를 작성해주세요";
     public static final String REWARD_DTO_ENTER_NUMBER_GREATER_THAN_ZERO = "0 이상의 경품 수량을 입력해주세요";
 
-    public static final String PARTICIPATION_DTO_FAIL_MESSAGE = "다음 기회에,,,";
+    public static final String WINNER_NO_WINNER_USER = "우승자가 없습니다";
 }
