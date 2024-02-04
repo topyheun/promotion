@@ -14,11 +14,11 @@ import topy.promotion.modules.user.dto.UserSignUpRequest;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final UserCreateService userCreateService;
 
     @PostMapping("/users/sign-up")
     public ResponseEntity signUp(@RequestBody @Valid UserSignUpRequest userSignUpRequest) {
-        userService.createAccount(userSignUpRequest);
+        userCreateService.createAccount(userSignUpRequest);
         return ResponseEntity.ok(SUCCESS);
     }
 }

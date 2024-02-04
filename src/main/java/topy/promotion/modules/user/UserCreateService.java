@@ -1,6 +1,5 @@
 package topy.promotion.modules.user;
 
-import static topy.promotion.modules.common.Const.USER_NOT_FOUND_ACCOUNT;
 import static topy.promotion.modules.common.Const.USER_USED_ACCOUNT;
 
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,7 @@ import topy.promotion.modules.user.dto.UserSignUpRequest;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UserService {
+public class UserCreateService {
 
     private final UserRepository userRepository;
 
@@ -21,10 +20,5 @@ public class UserService {
         }
         User user = userSignUpRequest.toUser();
         userRepository.save(user);
-    }
-
-    public User findUserById(final Long userSq) {
-        return userRepository.findById(userSq)
-            .orElseThrow(() -> new RuntimeException(USER_NOT_FOUND_ACCOUNT));
     }
 }
