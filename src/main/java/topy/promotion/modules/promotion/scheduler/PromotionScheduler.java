@@ -14,7 +14,7 @@ public class PromotionScheduler {
 
     private final PromotionRepository promotionRepository;
 
-    @Scheduled(fixedRate = 30000) // 30초마다 실행
+    @Scheduled(fixedRate = 10000)
     public void checkPromotionDate() {
         LocalDateTime now = LocalDateTime.now();
 
