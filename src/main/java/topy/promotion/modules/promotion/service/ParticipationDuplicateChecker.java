@@ -10,7 +10,7 @@ import topy.promotion.modules.promotion.repository.ParticipationRepository;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class ParticipationDuplicateCheckService {
+public class ParticipationDuplicateChecker {
 
     private final ParticipationRepository participationRepository;
 
