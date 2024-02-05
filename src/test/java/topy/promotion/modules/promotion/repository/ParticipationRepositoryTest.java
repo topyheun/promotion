@@ -2,7 +2,6 @@ package topy.promotion.modules.promotion.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDate;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,13 +23,10 @@ class ParticipationRepositoryTest {
     public void should_ReturnTrue_when_NotAttendPromotion() {
         // Arrange
         Long userSq = 1L;
-        LocalDate now = LocalDate.now();
         String promotionTitle = "Test Promotion";
 
         User user = User.builder()
             .username("LSH")
-            .password("0000")
-            .email("topy@naver.com")
             .build();
 
         Participation participation = Participation.builder()
