@@ -15,11 +15,25 @@ public class RewardRepositoryImpl implements RewardRepositoryCustom {
 
     @Override
     public Reward getAvailableReward(Rank rank, String promotionTitle) {
-        QReward reward = QReward.reward;
-        return jpaQueryFactory.selectFrom(reward)
-            .where(reward.rank.eq(rank)
-                .and(reward.promotion.title.eq(promotionTitle))
-                .and(reward.quantity.goe(1)))
+        if (rank == Rank.BOOM) {
+            return Reward.builder()
+                .name("꽝")
+                .rank(Rank.BOOM)
+                .build();
+        }
+        QReward qReward = QReward.reward;
+        Reward reward = jpaQueryFactory.selectFrom(qReward)
+            .where(qReward.rank.eq(rank)
+                .and(qReward.promotion.title.eq(promotionTitle))
+                .and(qReward.quantity.goe(1)))
             .fetchOne();
+
+        if (reward == null) {
+            return Reward.builder()
+                .name("꽝")
+                .rank(Rank.BOOM)
+                .build();
+        }
+        return reward;
     }
 }
