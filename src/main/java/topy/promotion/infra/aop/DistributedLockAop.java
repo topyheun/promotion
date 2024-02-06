@@ -26,32 +26,24 @@ public class DistributedLockAop {
         DistributedLock distributedLock = method.getAnnotation(DistributedLock.class);
 
         String key = buildLockKey(distributedLock, joinPoint);
-
         RLock rLock = redissonClient.getLock(key);
-        boolean lockAcquired = false;
 
         try {
-            lockAcquired = rLock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(), distributedLock.timeUnit());
-
-            if (lockAcquired) {
-                return aopTransactionExecutor.proceed(joinPoint);
-            } else {
+            boolean available = rLock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(), distributedLock.timeUnit());
+            if (!available) {
                 return false;
             }
+            return aopTransactionExecutor.proceed(joinPoint);
+        } catch (InterruptedException e) {
+            throw new InterruptedException();
         } finally {
-            if (lockAcquired) {
-                rLock.unlock();
-            }
+            rLock.unlock();
         }
     }
 
     private String buildLockKey(DistributedLock distributedLock, ProceedingJoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        Object dynamicKey = DynamicValueParser.getDynamicValue(
-            methodSignature.getParameterNames(),
-            joinPoint.getArgs(),
-            distributedLock.key()
-        );
+        Object dynamicKey = DynamicValueParser.getDynamicValue(methodSignature.getParameterNames(), joinPoint.getArgs(), distributedLock.key());
         return REDISSON_LOCK_PREFIX + dynamicKey;
     }
 }
