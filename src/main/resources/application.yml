@@ -13,6 +13,7 @@ spring:
   datasource:
     hikari:
       jdbc-url: jdbc:h2:mem:test:MODE=MYSQL
+      maximum-pool-size: 100
     username: admin
     password:
   data:
