@@ -34,10 +34,10 @@ class RewardSearchServiceTest {
     private RewardSearchService sut;
 
     @Test
-    @DisplayName("50개의 Thread에 의해 Reward가 수령될 때, 분산락을 통해 올바르게 수령되는지 확인한다.")
+    @DisplayName("Distributed Lock이 적용될 때 100명의 사용자가 프로모션에 동시 참여하여 Reward를 정확히 분배받는지 확인한다.")
     public void should_DistributeReward_when_ReceivedRewardFiftyThreads() throws Exception {
         // Arrange
-        String promotionTitle = "제비뽑기";
+        String promotionTitle = "Test Promotion";
         Rank mockRank = Rank.WIN;
 
         Promotion promotion = new Promotion(promotionTitle, LocalDateTime.now(), LocalDateTime.now().plusDays(10));
