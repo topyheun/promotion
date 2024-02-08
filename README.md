@@ -1,8 +1,8 @@
 # 프로모션
 
-이 프로젝트는 Redisson 라이브러리를 활용하여 Distributed Lock을 AOP로 구현했습니다. 주목적은 프로모션 참여 과정에서 발생할 수 있는 동시성 문제를 해결하는 것입니다. 구체적으로, 이 시스템은 회원들이 매일 한 번 프로모션에 참여할 수 있게 하며, 참여 결과에 따라 추첨을 통해 보상을 제공하는 기능을 포함하고 있습니다.
+이 프로젝트는 Redisson 라이브러리를 사용하여 Distributed Lock 기능을 AOP로 구현한 프로젝트로 핵심 목표는 프로모션 참여 시 발생할 수 있는 동시성 이슈를 해결하는 데 있습니다. 이 시스템은 회원들이 매일 한 번 프로모션에 참여할 수 있게 하며, 참여 결과에 따라 추첨을 통해 보상을 제공하는 기능을 포함하고 있습니다.
 
-[![ERD Docs](https://img.shields.io/badge/ERD-Docs-blue)](https://dbdocs.io/gmsdl1994/topy_promotion)
+[![ERD Docs](https://img.shields.io/badge/ERD-Docs-blue)](https://dbdocs.io/gmsdl1994/Distributed-Lock-Project)
 [![GitBook](https://img.shields.io/badge/GitBook-Read%20Docs-green)](https://topys-organization.gitbook.io/topys-promotion/)
 
 #### 사용 기술
@@ -140,7 +140,7 @@ class RewardSearchServiceTest {
 public class RedissonWatchdogTest {
 
     @Test
-    @DisplayName("leaseTime없이 Lock 획득 후 종료되었을 때, WatchdogTimeout이 잘 작동되는지 확인한다.")
+    @DisplayName("`leaseTime`없이 Lock 획득 후 종료되었을 때, WatchdogTimeout이 잘 작동되는지 확인한다.")
     public void should_UnLock_When_WatchdogTimeoutExpireAfterShutdown() throws InterruptedException {
         // Arrange
         String lockKey = "Test Lock";
