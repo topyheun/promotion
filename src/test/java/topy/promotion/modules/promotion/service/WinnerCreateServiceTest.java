@@ -15,7 +15,7 @@ import topy.promotion.modules.promotion.domain.Rank;
 import topy.promotion.modules.promotion.domain.Reward;
 import topy.promotion.modules.promotion.domain.Winner;
 import topy.promotion.modules.promotion.repository.WinnerRepository;
-import topy.promotion.modules.user.User;
+import topy.promotion.modules.user.domain.User;
 
 @ExtendWith(MockitoExtension.class)
 class WinnerCreateServiceTest {

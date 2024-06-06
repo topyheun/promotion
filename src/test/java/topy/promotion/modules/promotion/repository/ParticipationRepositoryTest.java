@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import topy.promotion.modules.promotion.domain.Participation;
-import topy.promotion.modules.user.User;
+import topy.promotion.modules.user.domain.User;
 
 @ActiveProfiles("test")
 @DataJpaTest

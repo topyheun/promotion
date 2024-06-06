@@ -1,4 +1,4 @@
-package topy.promotion.modules.promotion;
+package topy.promotion.modules.promotion.api;
 
 import jakarta.validation.Valid;
 import java.util.List;

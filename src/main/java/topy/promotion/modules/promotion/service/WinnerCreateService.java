@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import topy.promotion.modules.promotion.domain.Reward;
 import topy.promotion.modules.promotion.domain.Winner;
 import topy.promotion.modules.promotion.repository.WinnerRepository;
-import topy.promotion.modules.user.User;
+import topy.promotion.modules.user.domain.User;
 
 @Service
 @Transactional

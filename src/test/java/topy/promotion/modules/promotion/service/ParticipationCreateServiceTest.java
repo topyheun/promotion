@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import topy.promotion.modules.promotion.domain.Participation;
 import topy.promotion.modules.promotion.domain.Promotion;
 import topy.promotion.modules.promotion.repository.ParticipationRepository;
-import topy.promotion.modules.user.User;
+import topy.promotion.modules.user.domain.User;
 
 @ExtendWith(MockitoExtension.class)
 class ParticipationCreateServiceTest {

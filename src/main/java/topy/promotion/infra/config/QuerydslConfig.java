@@ -1,4 +1,4 @@
-package topy.promotion.infra;
+package topy.promotion.infra.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

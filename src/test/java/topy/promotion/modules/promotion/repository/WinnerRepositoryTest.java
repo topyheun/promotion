@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import topy.promotion.infra.QuerydslConfig;
+import topy.promotion.infra.config.QuerydslConfig;
 import topy.promotion.modules.promotion.domain.Winner;
 
 @Import(QuerydslConfig.class)

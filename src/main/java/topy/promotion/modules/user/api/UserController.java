@@ -1,4 +1,4 @@
-package topy.promotion.modules.user;
+package topy.promotion.modules.user.api;
 
 import static topy.promotion.modules.common.Const.SUCCESS;
 
@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import topy.promotion.modules.user.service.UserCreateService;
 import topy.promotion.modules.user.dto.UserSignUpRequest;
 
 @RestController

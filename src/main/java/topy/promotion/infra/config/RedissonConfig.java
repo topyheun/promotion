@@ -1,4 +1,4 @@
-package topy.promotion.infra.redis;
+package topy.promotion.infra.config;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;

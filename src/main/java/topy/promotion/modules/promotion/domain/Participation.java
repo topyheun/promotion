@@ -12,7 +12,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import topy.promotion.modules.common.BaseDateEntity;
-import topy.promotion.modules.user.User;
+import topy.promotion.modules.user.domain.User;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

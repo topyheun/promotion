@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import topy.promotion.modules.user.dto.UserSignUpRequest;
+import topy.promotion.modules.user.repository.UserRepository;
+import topy.promotion.modules.user.service.UserCreateService;
 
 @ExtendWith(MockitoExtension.class)
 class UserCreateServiceTest {

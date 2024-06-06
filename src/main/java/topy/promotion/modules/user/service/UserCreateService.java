@@ -1,10 +1,12 @@
-package topy.promotion.modules.user;
+package topy.promotion.modules.user.service;
 
 import static topy.promotion.modules.common.Const.USER_USED_ACCOUNT;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import topy.promotion.modules.user.domain.User;
+import topy.promotion.modules.user.repository.UserRepository;
 import topy.promotion.modules.user.dto.UserSignUpRequest;
 
 @Service

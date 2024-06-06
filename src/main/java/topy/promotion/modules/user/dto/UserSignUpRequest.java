@@ -6,7 +6,7 @@ import static topy.promotion.modules.common.Const.USER_DTO_WRONG_USERNAME_FORMAT
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
-import topy.promotion.modules.user.User;
+import topy.promotion.modules.user.domain.User;
 
 @Builder
 public record UserSignUpRequest(

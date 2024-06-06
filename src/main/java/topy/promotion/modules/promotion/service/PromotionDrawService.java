@@ -10,8 +10,8 @@ import topy.promotion.modules.promotion.domain.Rank;
 import topy.promotion.modules.promotion.domain.Reward;
 import topy.promotion.modules.promotion.dto.ParticipatePromotionRequest;
 import topy.promotion.modules.promotion.dto.ParticipatePromotionResponse;
-import topy.promotion.modules.user.User;
-import topy.promotion.modules.user.UserSearchService;
+import topy.promotion.modules.user.domain.User;
+import topy.promotion.modules.user.service.UserSearchService;
 
 @Service
 @Transactional
