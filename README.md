@@ -1,8 +1,8 @@
 # 프로모션
 
-이 프로젝트는 JMeter를 사용하여 발생시킨 동시성 이슈를 Redis를 활용한 분산락을 통해 제어하는 시스템으로, Redis 클라이언트인 Redisson와 AOP를 사용하여 구현했습니다.
+이 프로젝트는 JMeter를 사용하여 동시성 문제를 발생시키고, Redis를 활용한 분산 락을 통해 제어하는 프로젝트로 Redis 클라이언트 라이브러리인 Redisson과 AOP를 사용하여 분산 락을 구현했습니다.
 
-프로젝트의 주요 목적은 멀티 쓰레드나 멀티 프로세스 상황에서 발생할 수 있는 동시성 이슈를 경험하고 분산락과 AOP에 대한 이해를 높이는 것입니다.
+프로젝트의 주요 목적은 멀티 쓰레드 또는 멀티 프로세스 상황에서 발생할 수 있는 동시성 문제를 경험하고, 분산 락과 AOP에 대한 이해를 높이는 것입니다.
 
 [![GitBook](https://img.shields.io/badge/GitBook-API%20Docs-green)](https://topys-organization.gitbook.io/topys-promotion/)
 
